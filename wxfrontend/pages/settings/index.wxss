@@ -1,0 +1,146 @@
+/* 设置页 - 统一风格 */
+
+page {
+  --theme-primary: #10A37F;
+  --bg-primary: #F2F2F7;
+  --text-primary: #1D1D1F;
+  --text-secondary: #8E8E93;
+  background: var(--bg-primary);
+  overflow-x: hidden;
+}
+
+/* Background Decorations */
+.bg-circle {
+  position: fixed;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(16, 163, 127, 0.08) 0%, rgba(16, 163, 127, 0.02) 100%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.circle-1 { width: 300px; height: 300px; top: -100px; right: -80px; }
+.circle-2 { width: 200px; height: 200px; bottom: 200px; left: -60px; }
+
+/* Page Container */
+.page-container {
+  min-height: 100vh;
+  padding: 20px;
+  padding-bottom: 40px;
+  box-sizing: border-box;
+}
+
+.content-wrapper {
+  position: relative;
+  z-index: 1;
+}
+
+/* Header */
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.back-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FFFFFF;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.back-btn:active {
+  background: #F5F5F5;
+}
+
+.page-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.page-title.serif {
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+.header-placeholder {
+  width: 40px;
+}
+
+/* Settings Group */
+.settings-group {
+  background: #FFFFFF;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.group-title {
+  font-size: 13px;
+  color: var(--text-secondary);
+  padding: 16px 16px 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.setting-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid #F5F5F7;
+}
+
+.setting-item.no-border {
+  border-bottom: none;
+}
+
+.setting-item:active {
+  background: #F9F9F9;
+}
+
+.setting-info {
+  flex: 1;
+}
+
+.setting-label {
+  font-size: 16px;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.setting-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.arrow {
+  font-size: 20px;
+  color: #C7C7CC;
+  font-family: system-ui;
+}
+
+
+/* Logout Button */
+.logout-group {
+  margin-top: 40px;
+}
+
+.logout-item {
+  justify-content: center;
+}
+
+.logout-item .setting-info {
+  flex: none;
+  text-align: center;
+}
+
+.logout-label {
+  color: #ff4d4f !important;
+  font-weight: 500;
+}

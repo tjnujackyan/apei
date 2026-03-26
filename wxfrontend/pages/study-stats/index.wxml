@@ -1,0 +1,119 @@
+<view class="page-container" style="padding-top: {{paddingTop}}px;">
+  <!-- Background Decorations -->
+  <view class="bg-circle circle-1"></view>
+  <view class="bg-circle circle-2"></view>
+
+  <view class="content-wrapper">
+    <!-- Header -->
+    <view class="page-header">
+      <view class="back-btn" bindtap="handleBack">
+        <t-icon name="chevron-left" size="24px" />
+      </view>
+      <view class="page-title serif">学习统计</view>
+      <view class="header-placeholder"></view>
+    </view>
+
+    <!-- Loading State -->
+    <view wx:if="{{loading}}" class="loading-state">
+      <t-icon name="loading" size="32px" class="spin" />
+      <text>加载中...</text>
+    </view>
+
+    <view wx:else class="page-content">
+      <!-- Summary Cards -->
+      <view class="summary-grid">
+        <view class="summary-card primary">
+          <view class="summary-icon"><t-icon name="books" size="22px" /></view>
+          <view class="summary-value">{{weeklyStats.totalTasks || 0}}</view>
+          <view class="summary-label">本周任务</view>
+        </view>
+        <view class="summary-card">
+          <view class="summary-icon"><t-icon name="check-circle" size="22px" color="#34C759" /></view>
+          <view class="summary-value accent">{{weeklyStats.completedTasks || 0}}</view>
+          <view class="summary-label">已完成</view>
+        </view>
+        <view class="summary-card">
+          <view class="summary-icon"><t-icon name="time" size="22px" /></view>
+          <view class="summary-value">{{weeklyStats.totalMinutes || 0}}</view>
+          <view class="summary-label">学习分钟</view>
+        </view>
+        <view class="summary-card">
+          <view class="summary-icon"><t-icon name="trending-up" size="22px" /></view>
+          <view class="summary-value warning">{{weeklyStats.streak || 0}}</view>
+          <view class="summary-label">连续天数</view>
+        </view>
+      </view>
+
+      <!-- Wrong Questions Stats -->
+      <view class="section" wx:if="{{wrongStats}}">
+        <view class="section-header">
+          <view class="section-title">错题统计</view>
+        </view>
+        <view class="wrong-stats-card">
+          <view class="wrong-stat">
+            <view class="wrong-value error">{{wrongStats.totalWrongs || 0}}</view>
+            <view class="wrong-label">累计错题</view>
+          </view>
+          <view class="wrong-divider"></view>
+          <view class="wrong-stat">
+            <view class="wrong-value">{{wrongStats.todayWrongs || 0}}</view>
+            <view class="wrong-label">今日新增</view>
+          </view>
+          <view class="wrong-divider"></view>
+          <view class="wrong-stat">
+            <view class="wrong-value accent">{{wrongStats.masteredCount || 0}}</view>
+            <view class="wrong-label">已掌握</view>
+          </view>
+        </view>
+      </view>
+
+      <!-- Completion Rate -->
+      <view class="section">
+        <view class="section-header">
+          <view class="section-title">完成率</view>
+          <view class="section-value">{{weeklyStats.completionRate || 0}}%</view>
+        </view>
+        <view class="progress-card">
+          <view class="large-progress-bar">
+            <view class="large-progress-fill" style="width: {{weeklyStats.completionRate || 0}}%;"></view>
+          </view>
+          <view class="progress-hint">
+            <text wx:if="{{weeklyStats.completionRate >= 80}}">太棒了，继续保持！</text>
+            <text wx:elif="{{weeklyStats.completionRate >= 50}}">进展不错，再加把劲！</text>
+            <text wx:else>努力一下，你可以的！</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- Recent History -->
+      <view class="section" wx:if="{{history.length > 0}}">
+        <view class="section-header">
+          <view class="section-title">学习记录</view>
+        </view>
+        <view class="history-list">
+          <view 
+            wx:for="{{history}}" 
+            wx:key="id"
+            class="history-item"
+          >
+            <view class="history-date">{{item.dateStr || '今日'}}</view>
+            <view class="history-content">
+              <view class="history-title">{{item.title}}</view>
+              <view class="history-meta">
+                <text>{{item.duration || 0}}分钟</text>
+                <text class="history-status status-{{item.status}}">{{item.status === 'completed' ? '已完成' : '未完成'}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- Empty State -->
+      <view wx:if="{{!weeklyStats && !wrongStats && history.length === 0}}" class="empty-state">
+        <view class="empty-icon"><t-icon name="chart-bar" size="48px" color="#999" /></view>
+        <view class="empty-text">暂无学习数据</view>
+        <view class="empty-hint">开始学习后这里会显示你的统计信息</view>
+      </view>
+    </view>
+  </view>
+</view>

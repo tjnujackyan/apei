@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "学习计划",
+  "usingComponents": {
+    "t-icon": "tdesign-miniprogram/icon/icon"
+  }
+}

@@ -1,0 +1,84 @@
+/**
+ * 聊天气泡样式集合
+ * 用于 DIY 功能的气泡样式选择
+ */
+
+/* ==================== 基础气泡样式 ==================== */
+
+/* 气泡0：经典白色（默认） */
+.bubble-style-0 {
+  background: #FFFFFF !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-radius: 20rpx !important;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.04) !important;
+}
+
+/* ==================== SVG 图片气泡样式 ==================== */
+
+/* 气泡背景图片通用样式 */
+.bubble-bg-img {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+}
+
+/* 气泡文字内容 */
+.bubble-text-content {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* 气泡1：手绘圆形气泡 */
+.bubble-style-1 {
+  position: relative !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 28rpx 36rpx !important;
+  margin-left: 12rpx !important;
+  overflow: visible !important;
+}
+
+/* 气泡2：云朵思考气泡 */
+.bubble-style-2 {
+  position: relative !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 32rpx 40rpx !important;
+  margin-left: 16rpx !important;
+  margin-bottom: 40rpx !important;
+  overflow: visible !important;
+}
+
+/* ==================== 渐变风格气泡 ==================== */
+
+/* 气泡3：清新薄荷绿 */
+.bubble-style-3 {
+  background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%) !important;
+  border: none !important;
+  border-radius: 20rpx !important;
+  box-shadow: 0 4rpx 12rpx rgba(76, 175, 80, 0.15) !important;
+}
+
+/* 气泡4：温暖奶茶色 */
+.bubble-style-4 {
+  background: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%) !important;
+  border: 2rpx solid rgba(255, 193, 7, 0.3) !important;
+  border-radius: 20rpx !important;
+  box-shadow: 0 4rpx 12rpx rgba(255, 193, 7, 0.12) !important;
+}
+
+/* 气泡5：梦幻淡紫 */
+.bubble-style-5 {
+  background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%) !important;
+  border: none !important;
+  border-radius: 20rpx !important;
+  box-shadow: 0 4rpx 12rpx rgba(156, 39, 176, 0.1) !important;
+}

@@ -1,0 +1,118 @@
+<view class="page-container" style="padding-top: {{paddingTop}}px;">
+  <!-- Background Decorations -->
+  <view class="bg-circle circle-1"></view>
+  <view class="bg-circle circle-2"></view>
+
+  <!-- Header -->
+  <view class="header-section">
+    <view class="back-btn" bindtap="handleBack">
+      <t-icon name="chevron-left" size="24px" color="#000" />
+    </view>
+    <view class="large-title">聊天 DIY</view>
+    <view class="subtitle">自定义你的专属阿陪</view>
+  </view>
+
+  <!-- Preview Card -->
+  <view class="preview-card" style="{{previewBgStyle}}">
+    <view class="preview-message ai">
+      <image class="preview-avatar" src="{{currentAvatarUrl}}" mode="aspectFill" />
+      <view class="preview-bubble {{bubbleClassName}}">
+        <text class="bubble-text-content" style="{{fontStyle}}">你好呀，我是阿陪~</text>
+      </view>
+    </view>
+    <view class="preview-message user">
+      <view class="preview-bubble user-bubble">
+        <text>这是预览效果</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- Settings Sections -->
+  <view class="settings-wrapper">
+    <!-- Apei Avatar Upload -->
+    <view class="section">
+      <view class="section-title">阿陪头像</view>
+      <view class="upload-row">
+        <view class="upload-item" bindtap="onUploadAvatar">
+          <image wx:if="{{config.customAvatarUrl}}" class="upload-preview" src="{{config.customAvatarUrl}}" mode="aspectFill" />
+          <view wx:else class="upload-placeholder">
+            <t-icon name="add" size="32px" color="#999" />
+            <text>上传头像</text>
+          </view>
+        </view>
+        <view class="upload-tip">
+          <text>点击上传你喜欢的阿陪头像</text>
+          <text class="tip-sub">建议使用正方形图片</text>
+        </view>
+        <view wx:if="{{config.customAvatarUrl}}" class="reset-btn" bindtap="onResetAvatar">
+          <t-icon name="refresh" size="16px" color="#999" />
+          <text>恢复默认</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- Chat Background Upload -->
+    <view class="section">
+      <view class="section-title">聊天背景</view>
+      <view class="upload-row">
+        <view class="upload-item bg-upload" bindtap="onUploadBackground">
+          <image wx:if="{{config.customBackgroundUrl}}" class="upload-preview" src="{{config.customBackgroundUrl}}" mode="aspectFill" />
+          <view wx:else class="upload-placeholder">
+            <t-icon name="image" size="32px" color="#999" />
+            <text>上传背景</text>
+          </view>
+        </view>
+        <view class="upload-tip">
+          <text>上传你喜欢的聊天背景图</text>
+          <text class="tip-sub">建议使用竖版图片</text>
+        </view>
+        <view wx:if="{{config.customBackgroundUrl}}" class="reset-btn" bindtap="onResetBackground">
+          <t-icon name="refresh" size="16px" color="#999" />
+          <text>恢复默认</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- Bubble Style -->
+    <view class="section">
+      <view class="section-title">气泡样式</view>
+      <scroll-view scroll-x class="bubble-scroll" show-scrollbar="{{false}}" enhanced="{{true}}">
+        <view class="bubble-options">
+          <view 
+            wx:for="{{bubbleOptions}}" 
+            wx:key="index" 
+            class="bubble-option {{item.className}} {{config.bubbleStyle === index ? 'selected' : ''}}"
+            bindtap="onBubbleSelect"
+            data-index="{{index}}"
+          >
+            <text class="bubble-text">{{item.label}}</text>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- Font Style -->
+    <view class="section">
+      <view class="section-title">回复字体</view>
+      <view class="font-options">
+        <view 
+          wx:for="{{fontOptions}}" 
+          wx:key="index" 
+          class="font-option {{config.fontStyle === index ? 'selected' : ''}}"
+          bindtap="onFontSelect"
+          data-index="{{index}}"
+        >
+          <text class="font-preview" style="{{item.style}}">Aa</text>
+          <text class="font-name">{{item.label}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- Save Button -->
+  <view class="save-btn-container">
+    <view class="save-btn {{saving ? 'disabled' : ''}}" bindtap="handleSave">
+      {{saving ? '保存中...' : '保存设置'}}
+    </view>
+  </view>
+</view>

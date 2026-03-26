@@ -1,0 +1,260 @@
+page {
+  background: var(--theme-bg);
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+}
+
+.study-page {
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 120px; /* Space for tab bar */
+  position: relative;
+  z-index: 1;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
+
+/* Background Decorations (Unified with Home) */
+.bg-circle {
+  position: absolute;
+  border-radius: 50%;
+  background-color: #F0F9F6;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.circle-1 {
+  width: 600rpx;
+  height: 600rpx;
+  top: -100rpx;
+  left: -200rpx;
+}
+
+.circle-2 {
+  width: 500rpx;
+  height: 500rpx;
+  bottom: 200rpx;
+  right: -200rpx;
+}
+
+.header {
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--theme-text-primary);
+  font-family: var(--theme-font-serif);
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--theme-text-secondary);
+}
+
+/* ==================== 核心功能网格 ==================== */
+
+.grid-menu {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 32px;
+  position: relative;
+  z-index: 1;
+}
+
+.grid-item {
+  background: #FFFFFF;
+  border-radius: 20px; /* Unified radius */
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04); /* Unified shadow */
+  transition: all 0.2s ease;
+  border: 1px solid rgba(0,0,0,0.02);
+}
+
+.grid-item:active {
+  transform: scale(0.98);
+  background: #F9F9F9;
+}
+
+.icon-wrapper {
+  width: 44px; /* Slightly larger */
+  height: 44px;
+  background: #F5F7F9;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrong-book .icon-wrapper {
+  background: rgba(255, 149, 0, 0.1);
+}
+
+.import-doc .icon-wrapper {
+  background: rgba(0, 122, 255, 0.1);
+}
+
+.icon {
+  font-size: 22px;
+}
+
+.item-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--theme-text-primary);
+  margin-bottom: 4px;
+}
+
+.item-desc {
+  font-size: 12px;
+  color: var(--theme-text-secondary);
+}
+
+/* ==================== 科目列表 ==================== */
+
+.section {
+  position: relative;
+  z-index: 1;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--theme-text-primary);
+  margin-bottom: 16px;
+  padding-left: 4px;
+  font-family: var(--theme-font-serif);
+}
+
+/* Swipe Styles */
+.subject-swipe-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 16px;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04); /* Unified shadow */
+}
+
+.subject-card {
+  display: flex;
+  align-items: center;
+  background: #FFFFFF;
+  padding: 20px; /* Increased padding */
+  border-radius: 20px; /* Unified radius */
+  /* margin-bottom: 16px; Removed for swipe */
+  box-shadow: none; /* Shadow moved to container */
+  transition: all 0.2s ease;
+  border: 1px solid rgba(0,0,0,0.02);
+  
+  /* Swipe properties */
+  position: relative;
+  z-index: 2;
+  margin-bottom: 0 !important;
+  transition: left 0.2s ease-out;
+}
+
+.subject-card:active {
+  background: #F9F9F9; /* Change bg instead of scale for swipe item */
+}
+
+.swipe-actions {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  display: flex;
+  z-index: 1;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  overflow: hidden;
+}
+
+.swipe-btn {
+  width: 70px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #FFFFFF;
+}
+
+.delete-btn {
+  background-color: #FF3B30;
+}
+
+.subject-icon {
+  font-size: 24px;
+  width: 48px;
+  height: 48px;
+  background: #F5F7F9;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+}
+
+.subject-info {
+  flex: 1;
+}
+
+.subject-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--theme-text-primary);
+  margin-bottom: 4px;
+}
+
+.subject-meta {
+  font-size: 12px;
+  color: var(--theme-text-secondary);
+}
+
+.arrow {
+  font-size: 20px;
+  color: #C5C5C5;
+  font-weight: 300;
+}
+
+/* Empty State */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+  opacity: 0.6;
+}
+
+.empty-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.empty-text {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--theme-text-primary);
+  margin-bottom: 8px;
+}
+
+.empty-subtext {
+  font-size: 13px;
+  color: var(--theme-text-secondary);
+  text-align: center;
+}

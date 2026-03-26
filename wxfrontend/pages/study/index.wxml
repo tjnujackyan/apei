@@ -1,0 +1,72 @@
+<view class="study-page" style="padding-top: {{paddingTop}}px;">
+  <!-- Background Decorations -->
+  <view class="bg-circle circle-1"></view>
+  <view class="bg-circle circle-2"></view>
+
+  <view class="header">
+    <view class="title">学习中心</view>
+    <view class="subtitle">题库 · 错题 · 专项</view>
+  </view>
+
+  <!-- 核心功能区 -->
+  <view class="grid-menu">
+    <view class="grid-item wrong-book" bindtap="onGoToWrongBook">
+      <view class="icon-wrapper">
+        <t-icon name="bookmark" size="24px" />
+      </view>
+      <view class="item-info">
+        <view class="item-title">错题本 2.0</view>
+        <view class="item-desc">智能归因 · 专项突破</view>
+      </view>
+    </view>
+
+    <view class="grid-item import-doc" bindtap="onGoToImport">
+      <view class="icon-wrapper">
+        <t-icon name="file" size="24px" />
+      </view>
+      <view class="item-info">
+        <view class="item-title">导入题库</view>
+        <view class="item-desc">Word/PDF 一键导入</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 科目列表 -->
+  <view class="section" bindtap="resetSwipe">
+    <view class="section-title">我的题库</view>
+    
+    <block wx:if="{{questionSets.length > 0}}">
+      <block wx:for="{{questionSets}}" wx:key="id">
+        <view class="subject-swipe-container">
+          <view class="subject-card" 
+                style="{{item.txtStyle}}"
+                bindtouchstart="touchStart" 
+                bindtouchmove="touchMove" 
+                bindtouchend="touchEnd" 
+                data-index="{{index}}"
+                bindtap="onGoToQuestionSet" 
+                data-id="{{item.id}}" 
+                data-title="{{item.title}}">
+            <view class="subject-icon"><t-icon name="{{item.icon || 'books'}}" size="22px" /></view>
+            <view class="subject-info">
+              <view class="subject-name">{{item.title}}</view>
+              <view class="subject-meta">{{item.subject}} · {{item.count}}题</view>
+            </view>
+            <view class="arrow">›</view>
+          </view>
+          <view class="swipe-actions" style="opacity: {{item.showDelete ? 1 : 0}}">
+            <view class="swipe-btn delete-btn" catchtap="onDeleteQuestionSet" data-id="{{item.id}}">删除</view>
+          </view>
+        </view>
+      </block>
+    </block>
+    
+    <block wx:else>
+      <view class="empty-state">
+        <view class="empty-icon"><t-icon name="folder-open" size="48px" color="#999" /></view>
+        <view class="empty-text">暂无题库</view>
+        <view class="empty-subtext">点击上方“导入题库”添加您的第一份真题</view>
+      </view>
+    </block>
+  </view>
+</view>

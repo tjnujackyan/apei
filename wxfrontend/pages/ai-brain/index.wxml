@@ -1,0 +1,220 @@
+<view class="container chat-container" style="{{chatBgStyle}}">
+  <!-- Background Decorations (只在没有自定义背景时显示) -->
+  <view wx:if="{{!chatBgStyle}}" class="bg-circle circle-1"></view>
+  <view wx:if="{{!chatBgStyle}}" class="bg-circle circle-2"></view>
+
+  <!-- Custom Navigation Bar -->
+  <view class="custom-nav" style="height: {{statusBarHeight + navHeight}}px;">
+    <!-- Content Area matching Capsule Position -->
+    <view class="nav-bar-body" style="margin-top: {{menuButtonTop}}px; height: {{menuButtonHeight}}px;">
+      <!-- Left Action (Voice Reply Toggle) -->
+      <view class="nav-left" style="height: {{menuButtonHeight}}px;">
+        <view class="voice-toggle {{aiVoiceReply ? 'on' : 'off'}}" bindtap="toggleAiVoice" hover-class="none" hover-stop-propagation="false" style="height: {{menuButtonHeight}}px;">
+          <view class="toggle-bg">
+            <view class="toggle-label off">文字</view>
+            <view class="toggle-label on">语音</view>
+          </view>
+          <view class="toggle-handle" style="height: {{menuButtonHeight - 4}}px; width: {{34}}px;">
+            <t-icon name="{{aiVoiceReply ? 'sound' : 'chat'}}" size="16px" color="#000" />
+          </view>
+        </view>
+      </view>
+      
+      <!-- Title - Centered -->
+      <view class="nav-content" style="height: {{menuButtonHeight}}px;">
+        <view class="nav-title">Apei（内测版）</view>
+        <view class="nav-subtitle">{{loading ? '对方正在输入中...' : '在线'}}</view>
+      </view>
+    </view>
+    
+    <view class="nav-border"></view>
+  </view>
+
+  <!-- Chat History -->
+  <scroll-view 
+    scroll-y 
+    class="chat-history" 
+    scroll-into-view="{{toView}}" 
+    scroll-with-animation="{{true}}"
+    bindscroll="onScroll"
+    
+    show-scrollbar="{{false}}"
+    enhanced="{{true}}"
+    style="top: {{statusBarHeight + navHeight}}px;"
+  >
+    <block wx:for="{{messages}}" wx:key="index">
+      <view id="msg-{{index}}" class="message-wrapper {{item.role === 'user' ? 'user' : 'ai'}}">
+        <!-- AI Avatar -->
+        <view wx:if="{{item.role !== 'user'}}" class="ai-avatar" bindtap="onAvatarTap">
+          <image src="{{diyAvatarUrl}}" mode="aspectFill" class="ai-avatar-img" />
+        </view>
+        
+        <!-- Content Group -->
+        <view class="content-group">
+          <!-- 富消息模式（blocks数组） -->
+          <block wx:if="{{item.blocks && item.blocks.length > 0}}">
+            <!-- 语音播放按钮（如果有语音） -->
+            <view wx:if="{{item.type === 'voice' && item.audioUrl}}" 
+                  class="message-content voice-content {{item.role !== 'user' ? diyBubbleClass : ''}}" 
+                  bindtap="playAudio"
+                  bindlongpress="onVoiceLongPress"
+                  data-url="{{item.audioUrl}}" 
+                  data-index="{{index}}">
+              <view class="voice-bubble {{playingIndex === index ? 'playing' : ''}}">
+                <t-icon name="sound" size="20px" color="#000" />
+                <text class="voice-duration">{{item.duration}}''</text>
+              </view>
+            </view>
+            
+            <block wx:for="{{item.blocks}}" wx:for-item="block" wx:key="index">
+              <!-- 文本块 -->
+              <view wx:if="{{block.type === 'text' && (item.type !== 'voice' || item.convertedText)}}" class="message-content text-content {{item.role !== 'user' ? diyBubbleClass : ''}}">
+                <text class="bubble-text-content" style="{{diyFontStyle}}" user-select="{{true}}" selectable="{{true}}">{{block.content}}</text>
+              </view>
+              
+              <!-- 进度卡片 -->
+              <view wx:if="{{block.type === 'progress_card'}}" class="rich-card progress-card">
+                <text class="card-title" user-select="{{true}}" selectable="{{true}}">{{block.title}}</text>
+                <view class="progress-list">
+                  <view wx:for="{{block.items}}" wx:for-item="prog" wx:key="label" class="progress-item">
+                    <view class="progress-bar">
+                      <view class="progress-fill" style="width: {{prog.value}}%; background: {{prog.color || '#FF6B6B'}};"></view>
+                    </view>
+                    <text class="progress-label" user-select="{{true}}" selectable="{{true}}">{{prog.label}} {{prog.value}}%</text>
+                  </view>
+                </view>
+              </view>
+              
+              <!-- 统计卡片 -->
+              <view wx:if="{{block.type === 'stats_card'}}" class="rich-card stats-card">
+                <text class="card-title" user-select="{{true}}" selectable="{{true}}">{{block.title}}</text>
+                <view class="stats-grid">
+                  <view wx:for="{{block.stats}}" wx:for-item="stat" wx:key="label" class="stat-item">
+                    <text class="stat-value {{stat.trend === 'up' ? 'trend-up' : stat.trend === 'down' ? 'trend-down' : ''}}" user-select="{{true}}" selectable="{{true}}">{{stat.value}}</text>
+                    <text class="stat-label" user-select="{{true}}" selectable="{{true}}">{{stat.label}}</text>
+                  </view>
+                </view>
+              </view>
+              
+              <!-- 计划预览卡片 -->
+              <view wx:if="{{block.type === 'plan_preview'}}" class="rich-card plan-card">
+                <view class="plan-header">
+                  <text class="plan-title" user-select="{{true}}" selectable="{{true}}">{{block.title}}</text>
+                  <text class="plan-days" user-select="{{true}}" selectable="{{true}}">{{block.days}}天</text>
+                </view>
+                <text class="plan-summary" user-select="{{true}}" selectable="{{true}}">{{block.summary}}</text>
+              </view>
+              
+              <!-- 按钮组 -->
+              <view wx:if="{{block.type === 'action_buttons'}}" class="action-buttons-row">
+                <view 
+                  wx:for="{{block.buttons}}" 
+                  wx:for-item="btn" 
+                  wx:key="id" 
+                  class="action-btn {{btn.primary ? 'primary' : 'secondary'}}"
+                  bindtap="onActionButtonTap"
+                  data-action="{{btn.action}}"
+                  data-payload="{{btn.payload}}"
+                >
+                  {{btn.label}}
+                </view>
+              </view>
+            </block>
+          </block>
+          
+          <!-- 普通消息模式（兼容旧格式） -->
+          <block wx:else>
+            <!-- Main Message Content -->
+            <view class="message-content {{item.type === 'voice' ? 'voice-content' : 'text-content'}} {{item.role !== 'user' ? diyBubbleClass : ''}}" bindtap="{{item.type === 'voice' ? 'playAudio' : ''}}" bindlongpress="{{item.type === 'voice' ? 'onVoiceLongPress' : ''}}" hover-class="none" hover-stop-propagation="false" data-url="{{item.audioUrl}}" data-index="{{index}}" data-content="{{item.content}}">
+              <!-- SVG 气泡背景图片 -->
+              <image wx:if="{{item.role !== 'user' && item.type !== 'voice' && diyBubbleClass === 'bubble-style-1'}}" 
+                     class="bubble-bg-img" 
+                     src="/assets/bubbles/bubble-handdrawn.svg" 
+                     mode="scaleToFill" />
+              <image wx:if="{{item.role !== 'user' && item.type !== 'voice' && diyBubbleClass === 'bubble-style-2'}}" 
+                     class="bubble-bg-img" 
+                     src="/assets/bubbles/bubble-cloud.svg" 
+                     mode="scaleToFill" />
+              
+              <!-- Voice Message Bubble -->
+              <view wx:if="{{item.type === 'voice'}}" class="voice-bubble {{playingIndex === index ? 'playing' : ''}}">
+                <t-icon name="sound" size="20px" color="{{item.role === 'user' ? '#000' : '#000'}}" />
+                <text class="voice-duration">{{item.duration}}''</text>
+              </view>
+              
+              <!-- Text Message -->
+              <text wx:if="{{item.type !== 'voice'}}" class="bubble-text-content" user-select="{{true}}" selectable="{{true}}">{{item.content}}</text>
+            </view>
+
+            <!-- Converted Text Bubble (Independent) - 语音转文字气泡 -->
+            <view wx:if="{{item.type === 'voice' && item.convertedText}}" class="converted-bubble {{item.role !== 'user' ? diyBubbleClass : ''}}">
+               <text class="bubble-text-content" user-select="{{true}}" selectable="{{true}}">{{item.convertedText}}</text>
+            </view>
+          </block>
+        </view>
+      </view>
+    </block>
+    
+    <!-- Loading State removed as per request to show in nav bar -->
+  </scroll-view>
+
+  <!-- 快捷问题区域 -->
+  <scroll-view scroll-x class="suggestions-area" wx:if="{{suggestions.length > 0}}" show-scrollbar="{{false}}" enhanced="{{true}}">
+    <view 
+      wx:for="{{suggestions}}" 
+      wx:key="*this" 
+      class="suggestion-chip"
+      bindtap="onSuggestionTap"
+      data-text="{{item}}"
+    >
+      <t-icon name="chart-bubble" size="16px" color="#10A37F" style="margin-right: 4px;" />
+      <text user-select="{{true}}" selectable="{{true}}">{{item}}</text>
+    </view>
+  </scroll-view>
+
+  <!-- Bottom Input Area -->
+  <view class="input-area">
+    <!-- New Message Notification -->
+    <view class="new-message-tip" wx:if="{{showNewMessageTip}}" bindtap="scrollToBottom">
+      <t-icon name="arrow-down" size="16px" color="#007AFF" />
+      <text user-select="{{true}}" selectable="{{true}}">新消息</text>
+    </view>
+    
+    <view class="input-box">
+      <!-- Text Input Mode -->
+      <input 
+        wx:if="{{!voiceMode}}"
+        class="grok-input" 
+        placeholder="给 Apei 发送消息..." 
+        placeholder-style="color: #999;"
+        value="{{inputValue}}" 
+        bindinput="onInput" 
+        confirm-type="send" 
+        bindconfirm="sendMessage" 
+      />
+
+      <!-- Voice Input Mode (Hold to Speak) -->
+      <view 
+        wx:else 
+        class="voice-btn {{recording ? 'recording' : ''}}"
+        catch:touchstart="startRecord"
+        catch:touchend="stopRecord"
+      >
+        <text>{{recording ? '松开发送' : '按住说话'}}</text>
+      </view>
+
+      <!-- Right Actions Inside Input Box -->
+      <view class="input-actions-inner">
+        <!-- Voice Toggle -->
+        <view class="action-icon-btn" bindtap="switchMode">
+          <t-icon name="{{voiceMode ? 'keyboard' : 'microphone'}}" size="24px" color="#999" />
+        </view>
+
+        <!-- Send Button -->
+        <view class="action-icon-btn send-btn {{inputValue ? 'active' : ''}}" bindtap="{{inputValue ? 'sendMessage' : ''}}">
+          <t-icon name="arrow-right" size="24px" color="{{inputValue ? '#FFFFFF' : '#CCCCCC'}}" />
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

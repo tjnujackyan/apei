@@ -1,0 +1,18 @@
+{
+  "containerPort": 80,
+  "dockerfilePath": "Dockerfile",
+  "buildDir": ".",
+  "minNum": 0,
+  "maxNum": 10,
+  "cpu": 0.5,
+  "mem": 1,
+  "policyDetails": [
+    {
+      "policyType": "cpu",
+      "threshold": 60
+    }
+  ],
+  "envParams": {
+    "DB_TYPE": "mysql"
+  }
+}

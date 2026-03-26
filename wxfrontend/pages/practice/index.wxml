@@ -1,0 +1,152 @@
+<view class="screen">
+  <wxs module="utils">
+  var isSelected = function(type, selectedIdx, selectedIndices, index) {
+    if (type === 'multiple') {
+      return selectedIndices && selectedIndices.indexOf(index) > -1;
+    }
+    return selectedIdx === index;
+  }
+  var getLabel = function(item, index) {
+    if (item && item.label) {
+        // Truncate to first char if too long, e.g. "True" -> "T"
+        var lbl = item.label;
+        if (lbl === 'True') return 'T';
+        if (lbl === 'False') return 'F';
+        return lbl.length > 1 ? lbl.substring(0, 1) : lbl;
+    }
+    var labels = ['A','B','C','D','E','F','G'];
+    return labels[index] || '?';
+  }
+  var getContent = function(item) {
+    if (item && item.content) return item.content;
+    return item;
+  }
+  var isCorrect = function(item, currentQuestion) {
+    if (item && item.isCorrect !== undefined) return item.isCorrect;
+    return item === currentQuestion.correctAnswer;
+  }
+  module.exports = {
+    isSelected: isSelected,
+    getLabel: getLabel,
+    getContent: getContent,
+    isCorrect: isCorrect
+  }
+  </wxs>
+  <view class="gradient"></view>
+
+  <view class="container" wx:if="{{loading}}">
+    <!-- Handle loading state with custom header padding -->
+    <view style="height: {{statusBarHeight + navBarHeight}}px;"></view>
+    <view class="loading-state">
+      <t-loading theme="circular" size="40rpx" text="加载中..." />
+    </view>
+  </view>
+
+  <view class="container result-container" wx:elif="{{finished}}">
+     <!-- Handle result state with custom header padding -->
+    <view style="height: {{statusBarHeight + navBarHeight}}px;"></view>
+    <view class="result-card">
+      <view class="result-icon"><t-icon name="check-circle" size="48px" color="#34C759" /></view>
+      <view class="result-title">练习完成</view>
+      <view class="result-sub">保持专注，稳步前进</view>
+      <button class="primary-btn" bind:tap="onBack">返回题库</button>
+    </view>
+  </view>
+
+  <view class="container practice-container" wx:else>
+    <!-- Header -->
+    <view class="practice-header" style="padding-top: {{statusBarHeight}}px;">
+      <view class="header-row" style="height: {{navBarHeight}}px;">
+        <view class="header-left" bind:tap="onBack">
+          <t-icon name="close" size="24px" color="#333" />
+          <text class="header-title" style="line-height: 24px;">{{title}}</text>
+        </view>
+        <!-- Timer removed as requested -->
+      </view>
+      
+      <!-- Progress Bar (Slim line below header) -->
+      <view class="progress-section">
+        <view class="progress-track">
+          <view class="progress-fill" style="width: {{((currentIndex + 1) / total) * 100}}%"></view>
+        </view>
+        <view class="progress-text-sm">
+          <text class="curr-idx">{{currentIndex + 1}}</text>
+          <text class="total-idx">/{{total}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- Question Card -->
+    <scroll-view scroll-y class="question-scroll" show-scrollbar="{{false}}" enhanced="{{true}}">
+      <!-- Tags -->
+      <view class="tags-row">
+        <view class="tag-pill">{{currentQuestion.type === 'multiple' ? '多选题' : '单选题'}}</view>
+        <view class="tag-pill secondary" wx:if="{{currentQuestion.subject}}">{{currentQuestion.subject}}</view>
+        <!-- Mock Topic if not present -->
+        <view class="tag-pill secondary" wx:else>知识点</view>
+      </view>
+
+      <view class="q-content">{{currentQuestion.content || currentQuestion.stem}}</view>
+
+      <!-- Options -->
+      <view class="options-list">
+        <block wx:for="{{currentQuestion.options}}" wx:key="index">
+          <view 
+            class="option-card-new {{utils.isSelected(currentQuestion.type, selectedIdx, selectedIndices, index) ? 'selected' : ''}} {{showResult && utils.isCorrect(item, currentQuestion) ? 'correct' : ''}} {{showResult && utils.isSelected(currentQuestion.type, selectedIdx, selectedIndices, index) && !utils.isCorrect(item, currentQuestion) ? 'wrong' : ''}}"
+            bind:tap="onSelectOption"
+            data-index="{{index}}"
+            hover-class="option-hover"
+            hover-stay-time="100"
+          >
+            <view class="option-circle">{{utils.getLabel(item, index)}}</view>
+            <view class="option-text-new">{{utils.getContent(item)}}</view>
+          </view>
+        </block>
+      </view>
+
+      <!-- Result Banner -->
+      <view class="result-banner {{isCorrect ? 'correct' : 'wrong'}}" wx:if="{{showResult}}">
+        <t-icon name="{{isCorrect ? 'check-circle' : 'close-circle'}}" size="24px" color="#fff" />
+        <text class="result-text">{{isCorrect ? '回答正确' : '回答错误'}}</text>
+      </view>
+
+      <!-- Explanation / Hint -->
+      <view class="explanation-card" wx:if="{{(showResult || showHint) && currentQuestion.explanation}}">
+        <view class="exp-header">
+          <t-icon name="lightbulb" size="18px" color="#FF9500" />
+          <text class="exp-title">解析</text>
+        </view>
+        <view class="exp-content">{{currentQuestion.explanation}}</view>
+      </view>
+      
+      <!-- Spacer for bottom bar -->
+      <view style="height: 120px;"></view>
+    </scroll-view>
+
+    <!-- Bottom Action Bar -->
+    <view class="bottom-bar-new">
+      <block wx:if="{{currentIndex > 0}}">
+         <view class="prev-btn" bind:tap="onPrev">
+           <t-icon name="arrow-left" size="20px" color="#666" />
+           <text>上一题</text>
+         </view>
+      </block>
+      <block wx:else>
+         <view class="prev-btn disabled">
+           <text></text> <!-- Empty spacer -->
+         </view>
+      </block>
+      
+      <block wx:if="{{!showResult}}">
+        <button class="confirm-btn {{(!selectedIdx && selectedIdx !== 0 && (!selectedIndices || selectedIndices.length === 0)) ? 'disabled' : ''}}" bind:tap="onSubmit" disabled="{{!selectedIdx && selectedIdx !== 0 && (!selectedIndices || selectedIndices.length === 0)}}">
+          确认答案
+        </button>
+      </block>
+      <block wx:else>
+        <button class="confirm-btn" bind:tap="{{currentIndex < total - 1 ? 'onNext' : 'onComplete'}}">
+          {{currentIndex < total - 1 ? '下一题' : '完成练习'}}
+        </button>
+      </block>
+    </view>
+  </view>
+</view>

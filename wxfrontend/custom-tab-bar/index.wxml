@@ -1,0 +1,9 @@
+<view class="tab-bar">
+  <view class="tab-bar-border"></view>
+  <view wx:for="{{list}}" wx:key="index" class="tab-bar-item" data-path="{{item.value}}" data-index="{{index}}" bindtap="switchTab">
+    <view class="icon-box">
+      <image class="tab-icon" src="{{selected === index ? item.iconSelected : item.icon}}" mode="aspectFit"></image>
+    </view>
+    <text class="tab-text" style="color: {{selected === index ? selectedColor : color}}">{{item.label}}</text>
+  </view>
+</view>

@@ -1,0 +1,98 @@
+<view class="page-container" style="padding-top: {{paddingTop}}px;">
+  <!-- Background Decorations -->
+  <view class="bg-circle circle-1"></view>
+  <view class="bg-circle circle-2"></view>
+
+  <view class="content-wrapper">
+    <!-- Large Title Header -->
+    <view class="header-section">
+      <view class="large-title">我的</view>
+      
+      <!-- User Profile Card (iOS Apple ID Style) -->
+      <view class="user-card" wx:if="{{user}}" bindtap="handleEditProfile">
+        <view class="avatar-placeholder">
+          <text>{{user.displayName[0] || 'A'}}</text>
+        </view>
+        <view class="user-info">
+          <view class="user-name">{{user.displayName || '考研人'}}</view>
+          
+          <view class="user-id">ID: {{user.externalId}}</view>
+        </view>
+        <view class="arrow">›</view>
+      </view>
+      
+      <view class="user-card skeleton" wx:else>
+        <view class="avatar-placeholder skeleton-bg"></view>
+        <view class="user-info">
+          <view class="skeleton-text skeleton-bg" style="width: 120px;"></view>
+          <view class="skeleton-text skeleton-bg" style="width: 80px; margin-top: 8px;"></view>
+        </view>
+      </view>
+    </view>
+
+    <!-- Settings Groups -->
+    <view class="settings-group">
+      <!-- 未绑定手机号 -->
+      <view class="list-item" wx:if="{{user && !user.phoneNumber}}" bindtap="handleBindPhone">
+        <view class="item-icon red-bg">
+          <t-icon name="mobile" size="18px" color="#fff" />
+        </view>
+        <view class="item-content">
+          <text class="item-label">绑定手机号</text>
+          <view class="item-right">
+            <text class="item-value warning">未绑定</text>
+            <view class="arrow">›</view>
+          </view>
+        </view>
+      </view>
+      
+      <!-- 已绑定手机号 -->
+      <view class="list-item" wx:if="{{user && user.phoneNumber}}" bindtap="handleChangePhone">
+        <view class="item-icon green-bg">
+          <t-icon name="mobile" size="18px" color="#fff" />
+        </view>
+        <view class="item-content">
+          <text class="item-label">修改手机号</text>
+          <view class="item-right">
+            <text class="item-value">{{phoneDisplay}}</text>
+            <view class="arrow">›</view>
+          </view>
+        </view>
+      </view>
+
+      <view class="list-item" bindtap="handleMyPlans">
+        <view class="item-icon blue-bg">
+          <t-icon name="calendar" size="18px" color="#fff" />
+        </view>
+        <view class="item-content no-border">
+          <text class="item-label">我的学习计划</text>
+          <view class="arrow">›</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="settings-group">
+      <view class="list-item" bindtap="handleSettings">
+        <view class="item-icon gray-bg">
+          <t-icon name="setting" size="18px" color="#fff" />
+        </view>
+        <view class="item-content">
+          <text class="item-label">通用设置</text>
+          <view class="arrow">›</view>
+        </view>
+      </view>
+      
+      <view class="list-item" bindtap="handleAbout">
+        <view class="item-icon green-bg">
+          <t-icon name="help-circle" size="18px" color="#fff" />
+        </view>
+        <view class="item-content no-border">
+          <text class="item-label">关于我们</text>
+          <view class="arrow">›</view>
+        </view>
+      </view>
+    </view>
+    
+    <view class="version-info">版本 1.0.0</view>
+  </view>
+</view>

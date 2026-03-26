@@ -1,0 +1,50 @@
+<view class="page-container" style="padding-top: {{paddingTop}}px;">
+  <!-- Background Decorations -->
+  <view class="bg-circle circle-1"></view>
+  <view class="bg-circle circle-2"></view>
+
+  <view class="content-wrapper">
+    <!-- Header -->
+    <view class="page-header">
+      <view class="back-btn" bindtap="handleBack">
+        <t-icon name="chevron-left" size="24px" />
+      </view>
+      <view class="page-title serif">通用设置</view>
+      <view class="header-placeholder"></view>
+    </view>
+
+    <!-- Settings Groups -->
+    <view class="settings-group">
+      <view class="group-title">存储</view>
+      
+      <view class="setting-item no-border" bindtap="handleClearCache">
+        <view class="setting-info">
+          <view class="setting-label">清除缓存</view>
+          <view class="setting-desc">清除本地缓存数据</view>
+        </view>
+        <view class="arrow">›</view>
+      </view>
+    </view>
+
+    <view class="settings-group">
+      <view class="group-title">其他</view>
+      
+      <view class="setting-item" bindtap="handleFeedback">
+        <view class="setting-info">
+          <view class="setting-label">意见反馈</view>
+          <view class="setting-desc">告诉我们你的想法</view>
+        </view>
+        <view class="arrow">›</view>
+      </view>
+    </view>
+
+    <!-- Logout Button -->
+    <view class="settings-group logout-group">
+      <view class="setting-item logout-item no-border" bindtap="handleLogout">
+        <view class="setting-info">
+          <view class="setting-label logout-label">退出登录</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

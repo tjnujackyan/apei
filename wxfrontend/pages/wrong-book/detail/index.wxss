@@ -1,0 +1,236 @@
+/* 错题详情页 - 统一风格重构 */
+
+page {
+  background: var(--theme-bg);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.page-container {
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 20px;
+  padding-bottom: 40px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Background Decorations (统一背景装饰) */
+.bg-circle {
+  position: absolute;
+  border-radius: 50%;
+  background-color: #F0F9F6;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.circle-1 {
+  width: 600rpx;
+  height: 600rpx;
+  top: -100rpx;
+  left: -200rpx;
+}
+
+.circle-2 {
+  width: 500rpx;
+  height: 500rpx;
+  bottom: 200rpx;
+  right: -200rpx;
+}
+
+/* Loading */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  padding-top: 200rpx;
+}
+
+/* Header */
+.header {
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--theme-text-primary);
+  font-family: var(--theme-font-serif);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--theme-text-secondary);
+  display: block;
+}
+
+/* Question Card (统一卡片样式) */
+.question-card {
+  background: #FFFFFF;
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0,0,0,0.02);
+  position: relative;
+  z-index: 1;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.type-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  background: rgba(16, 163, 127, 0.1);
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--theme-primary);
+}
+
+.error-count {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  background: rgba(255, 59, 48, 0.08);
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #FF3B30;
+}
+
+/* Question Stem */
+.question-stem {
+  font-size: 16px;
+  color: var(--theme-text-primary);
+  line-height: 1.7;
+  margin-bottom: 24px;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+/* Options List (统一选项样式) */
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.option-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 16px;
+  background: #F8F9FA;
+  border-radius: 14px;
+  font-size: 14px;
+  color: var(--theme-text-primary);
+  transition: all 0.2s ease;
+}
+
+.option-item.correct {
+  background: rgba(52, 199, 89, 0.1);
+  border: 1px solid rgba(52, 199, 89, 0.2);
+}
+
+.option-item.correct .option-label,
+.option-item.correct .option-content {
+  color: #34C759;
+  font-weight: 500;
+}
+
+.option-label {
+  font-weight: 600;
+  color: var(--theme-text-secondary);
+  margin-right: 12px;
+  min-width: 20px;
+}
+
+.option-content {
+  flex: 1;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+/* Analysis Section (解析区域) */
+.analysis-section {
+  margin-top: 24px;
+  padding: 20px;
+  background: linear-gradient(135deg, #F0F9F6 0%, #E8F5F0 100%);
+  border-radius: 16px;
+}
+
+.analysis-row {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.analysis-row:last-child {
+  margin-bottom: 0;
+}
+
+.label {
+  font-weight: 600;
+  color: var(--theme-text-primary);
+  min-width: 80px;
+  flex-shrink: 0;
+}
+
+.value {
+  color: var(--theme-text-secondary);
+  flex: 1;
+  line-height: 1.6;
+}
+
+.value.correct {
+  color: #34C759;
+  font-weight: 600;
+}
+
+.value.wrong {
+  color: #FF3B30;
+  font-weight: 600;
+}
+
+/* Footer */
+.footer {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(0,0,0,0.04);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.date {
+  font-size: 12px;
+  color: var(--theme-text-tertiary);
+  background: #F5F5F5;
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+
+/* Empty State */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 200rpx;
+  color: var(--theme-text-secondary);
+  gap: 24rpx;
+}
+
+.empty-state text {
+  font-size: 16px;
+  font-weight: 500;
+}

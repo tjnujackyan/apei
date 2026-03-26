@@ -1,0 +1,11 @@
+node_modules
+dist
+npm-debug.log
+Dockerfile
+.git
+.gitignore
+README.md
+test
+test-tts.ts
+*.mp3
+tsconfig.tsbuildinfo

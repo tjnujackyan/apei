@@ -1,0 +1,246 @@
+<view class="onboarding-page" style="padding-top: 100px;">
+ 
+
+  <!-- 进度指示器 -->
+  <view class="progress-indicators">
+    <view class="indicator {{step >= 1 ? 'active' : ''}}"></view>
+    <view class="indicator {{step >= 2 ? 'active' : ''}}"></view>
+    <view class="indicator {{step >= 3 ? 'active' : ''}}"></view>
+    <view class="indicator {{step >= 4 ? 'active' : ''}}"></view>
+  </view>
+
+  <!-- 第1步：目标院校 -->
+  <view wx:if="{{step === 1}}" class="step-content fade-in">
+    <view class="step-scroll-content">
+      <view class="header">
+        <view class="title serif">你的目标院校<br/>是哪所？</view>
+        <view class="subtitle">让阿陪了解你的目标，为你量身定制学习方案</view>
+      </view>
+
+      <!-- 搜索框 -->
+      <view class="search-box">
+        <text class="search-icon"><t-icon name="search" size="18px" color="#999" /></text>
+        <input class="search-input" placeholder="请输入学校名称" value="{{targetSchool}}" bindinput="onSchoolInput"/>
+      </view>
+
+      <!-- 热门选择 -->
+      <view class="section">
+        <view class="section-label"><t-icon name="trending-up" size="16px" /> 热门选择</view>
+        <view class="chip-group">
+          <view class="chip {{targetSchool === '清华大学' ? 'active' : ''}}" bindtap="selectSchool" data-school="清华大学">清华大学</view>
+          <view class="chip {{targetSchool === '北京大学' ? 'active' : ''}}" bindtap="selectSchool" data-school="北京大学">北京大学</view>
+          <view class="chip {{targetSchool === '浙江大学' ? 'active' : ''}}" bindtap="selectSchool" data-school="浙江大学">浙江大学</view>
+          <view class="chip {{targetSchool === '复旦大学' ? 'active' : ''}}" bindtap="selectSchool" data-school="复旦大学">复旦大学</view>
+          <view class="chip {{targetSchool === '上海交大' ? 'active' : ''}}" bindtap="selectSchool" data-school="上海交大">上海交大</view>
+        </view>
+      </view>
+
+      <!-- 目标专业 -->
+      <view class="section">
+        <view class="section-label">目标专业</view>
+        <input 
+          class="search-input" 
+          style="padding-left: 20px;"
+          placeholder="请输入专业名称" 
+          value="{{targetMajor}}" 
+          bindinput="onMajorInput"
+        />
+      </view>
+
+      <!-- 目标分数 -->
+      <view class="section">
+        <view class="section-label">目标分数</view>
+        <input 
+          class="search-input" 
+          style="padding-left: 20px;"
+          type="number"
+          placeholder="请输入目标分数 (如 380)" 
+          value="{{targetScore}}" 
+          bindinput="onScoreInput"
+        />
+      </view>
+    </view>
+  </view>
+
+  <!-- 第2步：科目选择 -->
+  <view wx:elif="{{step === 2}}" class="step-content fade-in">
+    <view class="step-scroll-content">
+      <view class="header">
+        <view class="title serif">选择你的<br/>备考科目</view>
+        <view class="subtitle">可多选，阿陪会为你制定专属学习计划</view>
+      </view>
+
+      <!-- 公共课 -->
+      <view class="section">
+        <view class="section-label"><t-icon name="books" size="16px" /> 公共课</view>
+        <view class="subject-list">
+          <view class="subject-card {{selectedSubjects.politics ? 'selected' : ''}}" bindtap="toggleSubject" data-subject="politics">
+            <view class="subject-icon accent-bg"><t-icon name="city" size="22px" /></view>
+            <view class="subject-info">
+              <view class="subject-name">政治</view>
+              <view class="subject-desc">马原、毛中特、史纲、思修</view>
+            </view>
+            <view class="check-icon"><t-icon wx:if="{{selectedSubjects.politics}}" name="check" size="16px" color="#10A37F" /></view>
+          </view>
+
+          <view class="subject-card {{selectedSubjects.english ? 'selected' : ''}}" bindtap="toggleSubject" data-subject="english">
+            <view class="subject-icon accent-bg"><t-icon name="earth" size="22px" /></view>
+            <view class="subject-info">
+              <view class="subject-name">英语</view>
+              <view class="subject-desc">阅读、完型、翻译、写作</view>
+            </view>
+            <view class="check-icon"><t-icon wx:if="{{selectedSubjects.english}}" name="check" size="16px" color="#10A37F" /></view>
+          </view>
+
+          <view class="subject-card {{selectedSubjects.math ? 'selected' : ''}}" bindtap="toggleSubject" data-subject="math">
+            <view class="subject-icon {{selectedSubjects.math ? 'accent-bg' : 'gray-bg'}}"><t-icon name="calculation" size="22px" /></view>
+            <view class="subject-info">
+              <view class="subject-name">数学</view>
+              <view class="subject-desc">高数、线代、概率论</view>
+            </view>
+            <view class="check-icon"><t-icon wx:if="{{selectedSubjects.math}}" name="check" size="16px" color="#10A37F" /></view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 专业课 -->
+      <view class="section">
+        <view class="section-label"><t-icon name="laptop" size="16px" /> 专业课</view>
+        <view class="subject-list">
+          <view class="subject-card {{selectedSubjects.cs408 ? 'selected' : ''}}" bindtap="toggleSubject" data-subject="cs408">
+            <view class="subject-icon accent-bg"><t-icon name="server" size="22px" /></view>
+            <view class="subject-info">
+              <view class="subject-name">408 计算机综合</view>
+              <view class="subject-desc">数据结构、操作系统、计网...</view>
+            </view>
+            <view class="check-icon"><t-icon wx:if="{{selectedSubjects.cs408}}" name="check" size="16px" color="#10A37F" /></view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 添加其他 -->
+      <view class="add-more" bindtap="addSubject">
+        <text class="add-icon">+</text>
+        <text>添加其他科目</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 第3步：时间设置 -->
+  <view wx:elif="{{step === 3}}" class="step-content fade-in">
+    <view class="step-scroll-content">
+      <view class="header">
+        <view class="title serif">每天能学<br/>多长时间？</view>
+        <view class="subtitle">诚实面对自己，阿陪会为你合理规划</view>
+      </view>
+
+      <view class="time-options">
+        <view class="time-card {{studyTime === '1-2' ? 'selected' : 'inactive'}}" bindtap="selectTime" data-time="1-2">
+          <view class="time-icon {{studyTime === '1-2' ? 'accent-bg' : ''}}"><t-icon name="tips" size="22px" /></view>
+          <view class="time-info">
+            <view class="time-title">轻量学习</view>
+            <view class="time-desc {{studyTime === '1-2' ? 'accent' : ''}}">每天 1-2 小时</view>
+          </view>
+          <view class="{{studyTime === '1-2' ? 'check-radio' : 'radio'}}"><t-icon wx:if="{{studyTime === '1-2'}}" name="check" size="14px" color="#fff" /></view>
+        </view>
+
+        <view class="time-card {{studyTime === '3-5' ? 'selected' : 'inactive'}}" bindtap="selectTime" data-time="3-5">
+          <view class="time-icon {{studyTime === '3-5' ? 'accent-bg' : ''}}"><t-icon name="rocket" size="22px" /></view>
+          <view class="time-info">
+            <view class="time-title">正常节奏</view>
+            <view class="time-desc {{studyTime === '3-5' ? 'accent' : ''}}">每天 3-5 小时</view>
+          </view>
+          <view class="{{studyTime === '3-5' ? 'check-radio' : 'radio'}}"><t-icon wx:if="{{studyTime === '3-5'}}" name="check" size="14px" color="#fff" /></view>
+        </view>
+
+        <view class="time-card {{studyTime === '6-8' ? 'selected' : 'inactive'}}" bindtap="selectTime" data-time="6-8">
+          <view class="time-icon {{studyTime === '6-8' ? 'accent-bg' : ''}}"><t-icon name="trending-up" size="22px" /></view>
+          <view class="time-info">
+            <view class="time-title">全力冲刺</view>
+            <view class="time-desc {{studyTime === '6-8' ? 'accent' : ''}}">每天 6-8 小时</view>
+          </view>
+          <view class="{{studyTime === '6-8' ? 'check-radio' : 'radio'}}"><t-icon wx:if="{{studyTime === '6-8'}}" name="check" size="14px" color="#fff" /></view>
+        </view>
+
+        <view class="time-card {{studyTime === '8+' ? 'selected' : 'inactive'}}" bindtap="selectTime" data-time="8+">
+          <view class="time-icon {{studyTime === '8+' ? 'accent-bg' : ''}}"><t-icon name="thumb-up" size="22px" /></view>
+          <view class="time-info">
+            <view class="time-title">极限模式</view>
+            <view class="time-desc {{studyTime === '8+' ? 'accent' : ''}}">每天 8 小时以上</view>
+          </view>
+          <view class="{{studyTime === '8+' ? 'check-radio' : 'radio'}}"><t-icon wx:if="{{studyTime === '8+'}}" name="check" size="14px" color="#fff" /></view>
+        </view>
+      </view>
+
+      <!-- 倒计时 -->
+      <view class="countdown-card">
+        <view class="countdown-label">距离 2026 年考研</view>
+        <view class="countdown-value">186 天</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 第4步：助手风格 -->
+  <view wx:elif="{{step === 4}}" class="step-content fade-in">
+    <view class="step-scroll-content">
+      <view class="header center">
+        <view class="title serif">选择你的<br/>专属陪伴风格</view>
+        <view class="subtitle">阿陪会以你喜欢的方式陪你上岸</view>
+      </view>
+
+      <view class="persona-list">
+        <!-- 毒舌小新 -->
+        <view class="persona-card {{persona === 'duzhe_xiaoxin' ? 'selected' : 'inactive'}}" bindtap="selectPersona" data-persona="duzhe_xiaoxin">
+          <view class="persona-header">
+            <view class="persona-avatar {{persona === 'duzhe_xiaoxin' ? 'accent-bg' : ''}}"><t-icon name="chat" size="22px" /></view>
+            <view class="persona-info">
+              <view class="persona-name">毒舌小新</view>
+              <view class="persona-desc">直接、犀利、不废话<br/>适合需要被督促的你</view>
+            </view>
+            <view class="{{persona === 'duzhe_xiaoxin' ? 'check-radio' : 'radio-circle'}}"><t-icon wx:if="{{persona === 'duzhe_xiaoxin'}}" name="check" size="14px" color="#fff" /></view>
+          </view>
+          <view class="persona-quote {{persona === 'duzhe_xiaoxin' ? 'accent-bg' : ''}}">
+            <text class="quote-text {{persona === 'duzhe_xiaoxin' ? 'accent' : ''}}">"都 9 点了还在刷手机？你是想二战吗？"</text>
+          </view>
+        </view>
+
+        <!-- 娜娜子姐姐 -->
+        <view class="persona-card {{persona === 'nana_zejie' ? 'selected' : 'inactive'}}" bindtap="selectPersona" data-persona="nana_zejie">
+          <view class="persona-header">
+            <view class="persona-avatar {{persona === 'nana_zejie' ? 'accent-bg' : ''}}"><t-icon name="heart" size="22px" /></view>
+            <view class="persona-info">
+              <view class="persona-name-row">
+                <text class="persona-name">娜娜子姐姐</text>
+                <text class="badge">推荐</text>
+              </view>
+              <view class="persona-desc">温柔、鼓励、有耐心<br/>适合压力大、易焦虑的你</view>
+            </view>
+            <view class="{{persona === 'nana_zejie' ? 'check-radio accent' : 'radio-circle'}}"><t-icon wx:if="{{persona === 'nana_zejie'}}" name="check" size="14px" color="#fff" /></view>
+          </view>
+          <view class="persona-quote {{persona === 'nana_zejie' ? 'accent-bg' : ''}}">
+            <text class="quote-text {{persona === 'nana_zejie' ? 'accent' : ''}}">"今天辛苦了，休息一下也没关系的哦～"</text>
+          </view>
+        </view>
+
+        <!-- 理性助手 -->
+        <view class="persona-card {{persona === 'neutral' ? 'selected' : 'inactive'}}" bindtap="selectPersona" data-persona="neutral">
+          <view class="persona-header">
+            <view class="persona-avatar {{persona === 'neutral' ? 'accent-bg' : ''}}"><t-icon name="cooperation" size="22px" /></view>
+            <view class="persona-info">
+              <view class="persona-name">理性助手</view>
+              <view class="persona-desc">客观、专业、有条理<br/>只关注数据和进度</view>
+            </view>
+            <view class="{{persona === 'neutral' ? 'check-radio' : 'radio-circle'}}"><t-icon wx:if="{{persona === 'neutral'}}" name="check" size="14px" color="#fff" /></view>
+          </view>
+          <view class="persona-quote {{persona === 'neutral' ? 'accent-bg' : ''}}">
+            <text class="quote-text {{persona === 'neutral' ? 'accent' : ''}}">"根据数据分析，建议优先复习马原第三章"</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="bottom-action">
+    <button class="btn-primary" bindtap="handleAction">{{step === 4 ? '开始陪伴之旅' : '下一步'}}</button>
+  </view>
+</view>

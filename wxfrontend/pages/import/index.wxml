@@ -1,0 +1,210 @@
+<view class="screen" style="padding-top: {{paddingTop}}px;">
+  <t-message id="t-message" />
+  
+  <view class="container">
+    <!-- Tab Switcher -->
+    <view class="tabs-wrapper">
+      <view class="tab-item {{currentTab == 0 ? 'active' : ''}}" bind:tap="switchTab" data-tab="0">
+        <text>直接导入(beta)</text>
+      </view>
+      <view class="tab-item {{currentTab == 1 ? 'active' : ''}}" bind:tap="switchTab" data-tab="1">
+        <text>智能出题(建议)</text>
+      </view>
+    </view>
+
+    <!-- Title Input Card -->
+    <view class="card">
+      <view class="card-header">
+        <text class="card-title">题库标题</text>
+      </view>
+      <view class="card-content">
+        <t-input 
+          borderless 
+          class="subject-input" 
+          placeholder="例如：2025考研英语阅读真题" 
+          placeholder-style="color: #C7C7CC;"
+          bind:change="onTitleChange" 
+          value="{{title}}" 
+        />
+      </view>
+    </view>
+
+    <!-- Subject Card -->
+    <view class="card">
+      <view class="card-header">
+        <text class="card-title">科目名称</text>
+        <view class="card-action">
+           <!-- Optional icon or action -->
+        </view>
+      </view>
+      <view class="card-content">
+        <t-input 
+          borderless 
+          class="subject-input" 
+          placeholder="例如：数据结构" 
+          placeholder-style="color: #C7C7CC;"
+          bind:change="onSubjectChange" 
+          value="{{subject}}" 
+        />
+      </view>
+    </view>
+
+    <!-- Configuration Card -->
+    <view class="card" wx:if="{{currentTab == 1}}">
+      <!-- ... (Smart Gen Config) ... -->
+      <view class="form-item">
+        <view class="label-row">
+          <text class="label">生成数量: {{questionCount}}题</text>
+        </view>
+        <t-slider 
+          value="{{questionCount}}" 
+          min="1" 
+          max="50" 
+          bind:change="onCountChange" 
+          theme="capsule"
+          colors="{{['#10A37F', '#E7E7E7']}}"
+        />
+      </view>
+      
+      <view class="divider"></view>
+      
+      <view class="form-item">
+        <view class="label-row">
+          <text class="label">题目类型</text>
+        </view>
+        <view class="checkbox-group">
+          <view class="checkbox-item {{utils.includes(questionTypes, 'single') ? 'active' : ''}}" bind:tap="toggleType" data-type="single">
+            <view class="check-circle">
+              <t-icon name="check" size="16px" color="#fff" wx:if="{{utils.includes(questionTypes, 'single')}}" />
+            </view>
+            <text>单选题</text>
+          </view>
+          <view class="checkbox-item {{utils.includes(questionTypes, 'multiple') ? 'active' : ''}}" bind:tap="toggleType" data-type="multiple">
+            <view class="check-circle">
+               <t-icon name="check" size="16px" color="#fff" wx:if="{{utils.includes(questionTypes, 'multiple')}}" />
+            </view>
+            <text>多选题</text>
+          </view>
+          <view class="checkbox-item {{utils.includes(questionTypes, 'true_false') ? 'active' : ''}}" bind:tap="toggleType" data-type="true_false">
+            <view class="check-circle">
+               <t-icon name="check" size="16px" color="#fff" wx:if="{{utils.includes(questionTypes, 'true_false')}}" />
+            </view>
+            <text>判断题</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="divider"></view>
+
+      <view class="form-item">
+        <view class="label-row">
+          <text class="label">难度等级: {{difficulty === 1 ? '简单' : (difficulty === 2 ? '中等' : '困难')}}</text>
+        </view>
+        <t-slider 
+          value="{{difficulty}}" 
+          min="1" 
+          max="3" 
+          step="1" 
+          bind:change="onDifficultyChange" 
+          theme="capsule"
+          colors="{{['#10A37F', '#E7E7E7']}}"
+        />
+      </view>
+    </view>
+
+    <!-- Format Hint Card (Direct Import Only) -->
+    <view class="card hint-card" wx:if="{{currentTab == 0}}">
+      <view class="card-header">
+        <text class="card-title">格式要求</text>
+        <view class="beta-tag">测试版</view>
+      </view>
+      <view class="hint-content">
+        <image class="hint-image" src="/assets/example1.png" mode="widthFix" />
+        <view class="hint-text">
+          <text>• 仅支持 PDF 文档</text>
+          <text>• 题目与选项需清晰分行</text>
+          <text>• 当前为测试版本，仅能准确识别选择题及其答案</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- Upload Card -->
+    <view class="section-label">资料上传</view>
+    <view class="card upload-card" bind:tap="onChooseFile">
+      <block wx:if="{{file}}">
+         <view class="file-preview">
+            <view class="file-icon">
+              <text>DOC</text>
+            </view>
+            <view class="file-details">
+              <text class="file-name-text">{{file.name}}</text>
+              <text class="file-status">已选择</text>
+            </view>
+            <view class="remove-icon" catch:tap="onRemoveFile">
+              <t-icon name="close-circle-filled" size="20px" color="#C7C7CC" />
+            </view>
+         </view>
+      </block>
+      <block wx:else>
+         <view class="upload-placeholder">
+            <view class="upload-icon-circle">
+              <t-icon name="add" size="24px" color="#10A37F" />
+            </view>
+            <text class="upload-hint">{{currentTab == 0 ? '点击上传题目文件' : '点击上传复习资料'}}</text>
+         </view>
+      </block>
+    </view>
+
+    <!-- Submit Button -->
+    <view class="footer-action">
+      <button class="submit-btn" bind:tap="onSubmit" loading="{{loading}}">
+        {{currentTab == 0 ? '直接导入' : '智能生成'}}
+      </button>
+    </view>
+  </view>
+
+  <!-- Progress Overlay -->
+  <view class="progress-overlay" wx:if="{{showProgress}}">
+    <view class="progress-modal">
+      <view class="progress-header">
+        <text class="progress-title">正在处理</text>
+        <text class="progress-stage">{{progressStage}}</text>
+      </view>
+      
+      <!-- 步骤指示器 -->
+      <view class="progress-steps">
+        <view class="step-item {{progressCurrentStep >= 1 ? 'active' : ''}} {{progressCurrentStep > 1 ? 'completed' : ''}}">
+          <view class="step-circle">
+            <text class="step-icon" wx:if="{{progressCurrentStep > 1}}"><t-icon name="check" size="18px" color="#10A37F" /></text>
+            <text class="step-icon" wx:else><t-icon name="file" size="18px" /></text>
+          </view>
+          <text class="step-label">导入识别</text>
+        </view>
+        
+        <view class="step-line {{progressCurrentStep >= 2 ? 'active' : ''}}"></view>
+        
+        <view class="step-item {{progressCurrentStep >= 2 ? 'active' : ''}}">
+          <view class="step-circle">
+            <text class="step-icon"><t-icon name="cooperation" size="18px" /></text>
+          </view>
+          <text class="step-label">生题处理</text>
+        </view>
+      </view>
+      
+      <text class="progress-message">{{progressMessage}}</text>
+      
+      <view class="progress-tip">
+        <t-icon name="info-circle" size="14px" color="#999" />
+        <text>生题处理需要一定时间，请耐心等待</text>
+      </view>
+    </view>
+  </view>
+</view>
+
+<wxs module="utils">
+module.exports = {
+  includes: function(arr, item) {
+    return arr.indexOf(item) > -1;
+  }
+}
+</wxs>

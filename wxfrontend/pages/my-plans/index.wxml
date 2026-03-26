@@ -1,0 +1,121 @@
+<view class="page-container" style="padding-top: {{paddingTop}}px;">
+  <!-- Background Decorations -->
+  <view class="bg-circle circle-1"></view>
+  <view class="bg-circle circle-2"></view>
+
+  <view class="content-wrapper">
+    <!-- Header -->
+    <view class="page-header">
+      <view class="back-btn" bindtap="handleBack">
+        <t-icon name="chevron-left" size="24px" />
+      </view>
+      <view class="page-title serif">学习计划</view>
+      <view class="add-btn" bindtap="handleCreatePlan">
+        <t-icon name="add" size="20px" color="#10A37F" />
+      </view>
+    </view>
+
+    <!-- Loading State -->
+    <view wx:if="{{loading}}" class="loading-state">
+      <t-icon name="loading" size="32px" class="spin" />
+      <text>加载中...</text>
+    </view>
+
+    <view wx:else class="page-content">
+      <!-- Today Tasks Section -->
+      <view class="section">
+        <view class="section-header">
+          <view class="section-title">今日任务</view>
+          <view class="task-count" wx:if="{{todayTasks.length > 0}}">{{todayTasks.length}}项</view>
+        </view>
+
+        <view wx:if="{{todayTasks.length === 0}}" class="empty-card">
+          <view class="empty-icon"><t-icon name="task" size="48px" color="#999" /></view>
+          <view class="empty-text">今日暂无任务安排</view>
+          <view class="empty-hint">可以在学习页面添加任务</view>
+        </view>
+
+        <view wx:else class="task-list">
+          <view 
+            wx:for="{{todayTasks}}" 
+            wx:key="id"
+            class="task-card {{item.status === 'completed' ? 'completed' : ''}}"
+          >
+            <view 
+              class="task-check {{item.status === 'completed' ? 'checked' : ''}}"
+              bindtap="handleCompleteTask"
+              data-task-id="{{item.id}}"
+            >
+              <t-icon wx:if="{{item.status === 'completed'}}" name="check" size="16px" color="#fff" />
+            </view>
+            <view class="task-info">
+              <view class="task-title">{{item.title}}</view>
+              <view class="task-meta">
+                <text class="task-time">{{item.estimatedMinutes || 30}}分钟</text>
+                <text class="task-status status-{{item.status}}">{{item.status === 'completed' ? '已完成' : (item.status === 'in_progress' ? '进行中' : '待开始')}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- Plans Section -->
+      <view class="section">
+        <view class="section-header">
+          <view class="section-title">我的计划</view>
+        </view>
+
+        <view wx:if="{{plans.length === 0}}" class="empty-card">
+          <view class="empty-icon"><t-icon name="precise-monitor" size="48px" color="#999" /></view>
+          <view class="empty-text">还没有学习计划</view>
+          <view class="empty-hint">点击右上角添加你的第一个计划</view>
+        </view>
+
+        <view wx:else class="plan-list">
+          <view 
+            wx:for="{{plans}}" 
+            wx:key="id"
+            class="plan-card"
+          >
+            <view class="plan-header">
+              <view class="plan-name">{{item.name}}</view>
+              <view class="plan-subject">{{item.subjectCode || '综合'}}</view>
+            </view>
+            <view class="plan-progress">
+              <view class="progress-bar">
+                <view class="progress-fill" style="width: {{item.progress || 0}}%;"></view>
+              </view>
+              <text class="progress-text">{{item.progress || 0}}%</text>
+            </view>
+            <view class="plan-meta">
+              <text>{{item.totalDays || 0}}天计划</text>
+              <text>·</text>
+              <text>已完成{{item.completedDays || 0}}天</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- Weekly Stats -->
+      <view class="section" wx:if="{{stats}}">
+        <view class="section-header">
+          <view class="section-title">本周概览</view>
+        </view>
+        <view class="stats-card">
+          <view class="stat-item">
+            <view class="stat-value">{{stats.totalTasks || 0}}</view>
+            <view class="stat-label">总任务</view>
+          </view>
+          <view class="stat-item">
+            <view class="stat-value accent">{{stats.completedTasks || 0}}</view>
+            <view class="stat-label">已完成</view>
+          </view>
+          <view class="stat-item">
+            <view class="stat-value">{{stats.totalMinutes || 0}}</view>
+            <view class="stat-label">学习分钟</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

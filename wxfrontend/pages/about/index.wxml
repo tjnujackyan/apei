@@ -1,0 +1,70 @@
+<view class="page-container" style="padding-top: {{paddingTop}}px;">
+  <!-- Background Decorations -->
+  <view class="bg-circle circle-1"></view>
+  <view class="bg-circle circle-2"></view>
+
+  <view class="content-wrapper">
+    <!-- Header -->
+    <view class="page-header">
+      <view class="back-btn" bindtap="handleBack">
+        <t-icon name="chevron-left" size="24px" />
+      </view>
+      <view class="page-title serif">关于我们</view>
+      <view class="header-placeholder"></view>
+    </view>
+
+    <!-- App Info -->
+    <view class="app-info-card">
+      <view class="app-logo">
+        <text class="logo-emoji"><t-icon name="books" size="40px" color="#10A37F" /></text>
+      </view>
+      <view class="app-name">阿陪考研</view>
+      <view class="app-slogan">你的智能考研伴侣</view>
+      <view class="app-version">版本 {{version}}</view>
+    </view>
+
+    <!-- Features -->
+    <view class="features-card">
+      <view class="feature-item">
+        <view class="feature-icon"><t-icon name="cooperation" size="22px" /></view>
+        <view class="feature-info">
+          <view class="feature-title">AI 智能陪伴</view>
+          <view class="feature-desc">个性化人设，贴心陪你备考</view>
+        </view>
+      </view>
+      <view class="feature-item">
+        <view class="feature-icon"><t-icon name="file-copy" size="22px" /></view>
+        <view class="feature-info">
+          <view class="feature-title">智能题库</view>
+          <view class="feature-desc">AI 自动解析，高效刷题</view>
+        </view>
+      </view>
+      <view class="feature-item">
+        <view class="feature-icon"><t-icon name="chart-bar" size="22px" /></view>
+        <view class="feature-info">
+          <view class="feature-title">学习追踪</view>
+          <view class="feature-desc">错题本、学习计划一站式管理</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- Links -->
+    <view class="links-card">
+      <view class="link-item" bindtap="handlePrivacy">
+        <text class="link-label">隐私政策</text>
+        <view class="arrow">›</view>
+      </view>
+      <view class="link-item" bindtap="handleTerms">
+        <text class="link-label">用户协议</text>
+        <view class="arrow">›</view>
+      </view>
+     
+    </view>
+
+    <!-- Footer -->
+    <view class="footer">
+      <view class="copyright">© 2024 阿陪考研</view>
+      <view class="icp">Made with <t-icon name="heart-filled" size="14px" color="#FF3B30" /> for 考研人</view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "完善信息",
+  "usingComponents": {
+    "t-steps": "tdesign-miniprogram/steps/steps",
+    "t-step-item": "tdesign-miniprogram/step-item/step-item",
+    "t-input": "tdesign-miniprogram/input/input",
+    "t-button": "tdesign-miniprogram/button/button",
+    "t-radio": "tdesign-miniprogram/radio/radio",
+    "t-radio-group": "tdesign-miniprogram/radio-group/radio-group",
+    "t-message": "tdesign-miniprogram/message/message"
+  }
+}

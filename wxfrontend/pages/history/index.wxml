@@ -1,0 +1,33 @@
+<view class="container" style="padding-top: {{paddingTop}}px;">
+  <view class="header">
+    <view class="title">历史任务</view>
+    <view class="subtitle">记录每一天的进步</view>
+  </view>
+
+  <view class="timeline" wx:if="{{historyGroups.length > 0}}">
+    <block wx:for="{{historyGroups}}" wx:key="date">
+      <view class="date-group">
+        <view class="date-label">{{item.date}}</view>
+        <view class="task-list">
+          <block wx:for="{{item.tasks}}" wx:key="id" wx:for-item="task">
+            <view class="task-item">
+              <view class="task-icon-wrapper {{task.isCompleted ? 'completed-bg' : 'pending-bg'}}">
+                <t-icon wx:if="{{task.isCompleted}}" name="check" size="20px" color="#FFFFFF" />
+                <t-icon wx:else name="time" size="20px" color="#FFFFFF" />
+              </view>
+              <view class="task-content">
+                <view class="task-title {{task.isCompleted ? '' : 'pending-text'}}">{{task.title}}</view>
+                <view class="task-meta">{{task.time}} · {{task.status}}</view>
+              </view>
+            </view>
+          </block>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <view class="empty-state" wx:else>
+    <t-icon name="history" size="48px" color="#CCCCCC" />
+    <view class="empty-text">暂无历史任务</view>
+  </view>
+</view>

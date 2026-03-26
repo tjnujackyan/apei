@@ -1,0 +1,89 @@
+<view class="page-container" style="padding-top: {{paddingTop}}px;">
+  <t-message id="t-message" />
+  
+  <view class="container">
+    <!-- 1. Header Card: Basic Info & Stats -->
+    <view class="card info-card">
+      <view class="header-row">
+        <view class="title-block">
+          <view class="set-title">{{stats.set.title || '加载中...'}}</view>
+          <view class="set-subtitle">{{stats.set.subject}} · {{stats.set.count}}题</view>
+        </view>
+        <view class="icon-block">
+          <view class="subject-icon-lg"><t-icon name="{{icon}}" size="32px" /></view>
+        </view>
+      </view>
+      
+      <view class="divider"></view>
+
+      <view class="stats-row">
+        <view class="stat-item">
+          <view class="stat-value">{{stats.set.count}}</view>
+          <view class="stat-label">总题数</view>
+        </view>
+        <view class="stat-item">
+          <view class="stat-value">{{stats.history.length}}</view>
+          <view class="stat-label">练习次数</view>
+        </view>
+        <view class="stat-item">
+          <view class="stat-value">{{avgAccuracy}}%</view>
+          <view class="stat-label">平均正确率</view>
+        </view>
+      </view>
+
+      <!-- Action Buttons -->
+      <view class="action-row">
+        <button class="action-btn secondary" bindtap="onRestart">
+          <t-icon name="refresh" size="18px" />
+          <text>重新开始</text>
+        </button>
+        <button class="action-btn primary" bindtap="onContinue">
+          <t-icon name="play-circle" size="18px" />
+          <text>{{stats.lastSession && stats.lastSession.status === 'active' ? '继续做题' : '开始做题'}}</text>
+        </button>
+      </view>
+    </view>
+
+    <!-- 2. Last Progress (Optional, if exists) -->
+    <block wx:if="{{stats.lastSession}}">
+      <view class="section-title">上次进度</view>
+      <view class="card progress-card" bindtap="onContinue">
+        <view class="progress-info">
+          <view class="progress-date">{{stats.lastSession.formattedDate}}</view>
+          <view class="progress-status {{stats.lastSession.status}}">
+            {{stats.lastSession.status === 'active' ? '进行中' : '已完成'}}
+          </view>
+        </view>
+        <view class="progress-bar-row">
+           <text class="progress-text">已答 {{stats.lastSession.progress}}</text>
+        </view>
+      </view>
+    </block>
+
+    <!-- 3. History List -->
+    <view class="section-title">历史记录</view>
+    <block wx:if="{{stats.history.length > 0}}">
+      <view class="history-list">
+        <block wx:for="{{stats.history}}" wx:key="id">
+          <view class="card history-item">
+            <view class="history-left">
+              <view class="history-date">{{item.formattedDate}}</view>
+              <view class="history-meta">共 {{item.totalQuestions}} 题</view>
+            </view>
+            <view class="history-right">
+              <view class="accuracy-badge {{item.accuracy >= 80 ? 'high' : (item.accuracy >= 60 ? 'mid' : 'low')}}">
+                正确率 {{item.accuracy}}%
+              </view>
+            </view>
+          </view>
+        </block>
+      </view>
+    </block>
+    <block wx:else>
+      <view class="empty-state">
+        <view class="empty-icon"><t-icon name="chart-bar" size="48px" color="#999" /></view>
+        <text>暂无练习记录</text>
+      </view>
+    </block>
+  </view>
+</view>

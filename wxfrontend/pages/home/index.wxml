@@ -1,0 +1,103 @@
+<view class="screen" style="padding-top: {{paddingTop}}px;">
+  <view class="bg-circle circle-1"></view>
+  <view class="bg-circle circle-2"></view>
+
+  <view class="container" bindtap="resetSwipe">
+    <view class="header">
+      <view class="date-row">{{currentDate}}</view>
+      <view class="title">{{greeting}} <t-icon name="{{greetingIcon}}" size="20px" /></view>
+
+      <view class="countdown-card card">
+        <view class="countdown-left">
+          <view class="countdown-label">距离 2026 考研</view>
+          <view class="countdown-value">
+            <text class="days">{{daysLeft}}</text>
+            <text class="unit">天</text>
+          </view>
+        </view>
+        <view class="countdown-right">
+          <view class="target-label">目标院校</view>
+          <view class="target-school">{{targetSchool}}</view>
+          <view class="target-major">{{targetMajor}}</view>
+        </view>
+      </view>
+
+      <view class="wrong-card" bindtap="onGoToTodayWrongs">
+        <view class="wrong-info">
+          <view class="wrong-icon"><t-icon name="close" size="18px" color="#FF3B30" /></view>
+          <view class="wrong-text-col">
+            <view class="wrong-title">今日错题</view>
+            <view class="wrong-desc">回顾今日错题，及时查漏补缺</view>
+          </view>
+        </view>
+        <view class="wrong-action">›</view>
+      </view>
+
+      <!-- 智能复习入口卡片 -->
+      <view class="smart-review-card" bindtap="onGoToSmartReview">
+        <view class="smart-review-info">
+          <view class="smart-review-icon"><t-icon name="root-list" size="22px" color="#10A37F" /></view>
+          <view class="smart-review-text-col">
+            <view class="smart-review-title">智能复习</view>
+            <view class="smart-review-desc">{{smartReviewDesc}}</view>
+          </view>
+        </view>
+        <view class="smart-review-badge" wx:if="{{smartReviewCount > 0}}">
+          <text class="badge-count">{{smartReviewCount}}</text>
+          <text class="badge-label">题</text>
+        </view>
+        <view class="smart-review-action">›</view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-header">
+        <view class="section-title"><t-icon name="edit" size="16px" /> 今日任务</view>
+        <view class="section-actions">
+          <view class="icon-btn" bindtap="onAddTask">
+            <t-icon name="add" size="20px" color="#10A37F" />
+          </view>
+        </view>
+      </view>
+
+      <block wx:for="{{tasks}}" wx:key="id">
+        <view class="task-swipe-container">
+          <view class="task-content-wrapper card task-card {{item.completed ? 'completed' : ''}}" style="{{item.txtStyle}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd" data-index="{{index}}" catchtap="onTapCard">
+            <view class="task-icon-wrapper {{item.completed ? 'completed-bg' : ''}}" catchtap="onTaskToggle" data-id="{{item.id}}" data-completed="{{item.completed}}">
+              <t-icon wx:if="{{item.completed}}" name="check" size="20px" color="#FFFFFF" />
+              <text wx:else class="task-icon-text">{{item.icon}}</text>
+            </view>
+            <view class="task-content">
+              <view class="task-title {{item.completed ? 'completed-text' : ''}}">{{item.title}}</view>
+              <view class="task-meta">{{item.time}}</view>
+            </view>
+            <view class="task-status">
+              <t-icon wx:if="{{item.completed}}" name="check" size="20px" color="#10A37F" />
+              <view wx:else class="progress-ring">{{item.progress}}</view>
+            </view>
+          </view>
+          <view class="swipe-actions" style="opacity: {{item.showDelete ? 1 : 0}}">
+            <view class="swipe-btn complete-btn" catchtap="onCompleteTask" data-id="{{item.id}}">完成</view>
+            <view class="swipe-btn delete-btn" catchtap="onDeleteTask" data-id="{{item.id}}">删除</view>
+          </view>
+        </view>
+      </block>
+      
+      <view class="empty-state" wx:if="{{tasks.length === 0 && !loading}}">
+        <text class="empty-text">今日暂无任务</text>
+      </view>
+    </view>
+
+    <!-- 历史任务 -->
+    <view class="section">
+      <view class="section-header">
+        <view class="section-title"><t-icon name="chart-bar" size="16px" /> 历史任务</view>
+        <view class="history-btn" bindtap="onViewHistory">查看历史</view>
+      </view>
+      
+      <view class="card chart-card">
+        <canvas type="2d" id="historyChart" class="history-chart"></canvas>
+      </view>
+    </view>
+  </view>
+</view>

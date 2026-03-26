@@ -1,0 +1,451 @@
+/* 首页样式 - ChatGPT风格重构 */
+
+page {
+  background: var(--theme-bg);
+  overflow-x: hidden;
+}
+
+.screen {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
+
+/* Background Decorations (Unified with Splash) */
+.bg-circle {
+  position: absolute;
+  border-radius: 50%;
+  background-color: #F0F9F6;
+  z-index: 0;
+}
+
+.circle-1 {
+  width: 600rpx;
+  height: 600rpx;
+  top: -100rpx;
+  left: -200rpx;
+}
+
+.circle-2 {
+  width: 500rpx;
+  height: 500rpx;
+  bottom: 200rpx;
+  right: -200rpx;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  padding: 20px 24px 120px; /* Increased bottom padding to 120px to clear custom tab bar */
+  box-sizing: border-box;
+}
+
+.header {
+  padding: 8px 0 12px;
+}
+
+.date-row {
+  font-size: 13px;
+  color: var(--theme-text-secondary);
+  margin-bottom: 4px;
+  letter-spacing: 1px;
+}
+
+.title {
+  font-size: 28px; /* Increased from 24px to match Onboarding title */
+  font-weight: 600;
+  color: var(--theme-text-primary);
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  font-family: var(--theme-font-serif); /* Serif font for title */
+}
+
+/* ==================== 倒计时卡片 ==================== */
+
+.countdown-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  background: #FFFFFF;
+  border-radius: var(--theme-radius-card);
+  box-shadow: var(--theme-shadow-card);
+  border: 1px solid rgba(0,0,0,0.02); /* Subtle border like Onboarding chips/cards */
+}
+
+.countdown-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.countdown-label {
+  font-size: 13px;
+  color: var(--theme-text-secondary);
+  margin-bottom: 8px;
+}
+
+.countdown-value {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.countdown-value .days {
+  font-size: 48px;
+  font-weight: 600;
+  color: var(--theme-primary);
+  line-height: 1;
+  letter-spacing: -2px;
+  font-family: var(--theme-font-serif); /* Serif for big numbers */
+}
+
+.countdown-value .unit {
+  font-size: 16px;
+  color: var(--theme-text-secondary);
+  font-weight: 500;
+  margin-left: 4px;
+}
+
+.countdown-right {
+  text-align: right;
+}
+
+.target-label {
+  font-size: 11px;
+  color: var(--theme-text-secondary);
+  margin-bottom: 6px;
+}
+
+.target-school {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--theme-text-primary);
+  margin-bottom: 4px;
+}
+
+.target-major {
+  font-size: 13px;
+  color: var(--theme-primary);
+  font-weight: 500;
+}
+
+/* ==================== 错题卡片 ==================== */
+.wrong-card {
+  margin-top: 20px;
+  background: #FFFFFF;
+  border-radius: var(--theme-radius-card);
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--theme-shadow-card);
+  border: 1px solid rgba(0,0,0,0.02);
+}
+
+.wrong-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.wrong-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(255, 87, 87, 0.1);
+  color: #FF5757;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.wrong-text-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.wrong-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--theme-text-primary);
+  margin-bottom: 4px;
+}
+
+.wrong-desc {
+  font-size: 13px;
+  color: var(--theme-text-secondary);
+}
+
+.wrong-action {
+  color: var(--theme-text-tertiary);
+  font-size: 20px;
+}
+
+/* ==================== 智能复习卡片 ==================== */
+.smart-review-card {
+  margin-top: 16px;
+  background: linear-gradient(135deg, #10A37F 0%, #0D8A6A 100%);
+  border-radius: var(--theme-radius-card);
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 16px rgba(16, 163, 127, 0.25);
+}
+
+.smart-review-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+}
+
+.smart-review-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.smart-review-text-col {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.smart-review-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin-bottom: 4px;
+}
+
+.smart-review-desc {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.smart-review-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-right: 12px;
+}
+
+.smart-review-badge .badge-count {
+  font-size: 20px;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 1;
+}
+
+.smart-review-badge .badge-label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: 2px;
+}
+
+.smart-review-action {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 20px;
+}
+
+/* ==================== 任务列表 ==================== */
+
+.section {
+  margin-top: 40px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 0 4px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--theme-text-primary);
+  font-family: var(--theme-font-serif); /* Serif for section title */
+}
+
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(16, 163, 127, 0.1); /* Keep using green tint */
+  transition: all 0.2s ease;
+}
+
+.task-swipe-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 12px;
+  overflow: hidden; /* Ensure content doesn't spill out */
+  border-radius: 16px; /* Match card radius */
+}
+
+.task-content-wrapper {
+  position: relative;
+  z-index: 2;
+  background: #FFFFFF;
+  transition: left 0.2s ease-out;
+  margin-bottom: 0 !important; /* Override default margin */
+}
+
+.swipe-actions {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  display: flex;
+  z-index: 1;
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+  overflow: hidden;
+}
+
+.swipe-btn {
+  width: 70px; /* Reduced from 80px to fit two buttons */
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+}
+
+.complete-btn {
+  background-color: #10A37F;
+}
+
+.delete-btn {
+  background-color: #FF5757;
+}
+
+
+.card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  margin-bottom: 16px;
+  padding: 20px;
+  transition: transform 0.1s ease;
+}
+
+.card:active {
+  transform: scale(0.98);
+}
+
+.task-card {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.task-icon-wrapper {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #F0F9F6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+  flex-shrink: 0;
+}
+
+.task-icon-wrapper.completed-bg {
+  background: #10A37F;
+}
+
+.task-icon-text {
+  font-size: 18px;
+  font-weight: 600;
+  color: #10A37F;
+}
+
+.task-content {
+  flex: 1;
+  margin-right: 12px;
+}
+
+.task-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333333;
+  margin-bottom: 4px;
+}
+
+.task-title.completed-text {
+  color: #999999;
+  text-decoration: line-through;
+}
+
+.task-meta {
+  font-size: 12px;
+  color: #999999;
+}
+
+.task-status {
+  flex-shrink: 0;
+}
+
+.progress-ring {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #E0E0E0;
+  border-radius: 50%;
+}
+
+.completed {
+  opacity: 0.8;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.empty-text {
+  font-size: 14px;
+  color: #999999;
+}
+
+.history-btn {
+  font-size: 13px;
+  color: #10A37F;
+  font-weight: 500;
+}
+
+.chart-card {
+  padding: 20px;
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.history-chart {
+  width: 100%;
+  height: 200px;
+}

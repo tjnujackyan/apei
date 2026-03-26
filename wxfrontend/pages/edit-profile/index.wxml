@@ -1,0 +1,143 @@
+<view class="page-container" style="padding-top: {{paddingTop}}px;">
+  <!-- Background Decorations -->
+  <view class="bg-circle circle-1"></view>
+  <view class="bg-circle circle-2"></view>
+
+  <view class="content-wrapper">
+    <!-- Header -->
+    <view class="page-header">
+      <view class="back-btn" bindtap="handleBack">
+        <t-icon name="chevron-left" size="24px" />
+      </view>
+      <view class="page-title serif">编辑资料</view>
+      <view class="header-placeholder"></view>
+    </view>
+
+    <!-- Loading State -->
+    <view wx:if="{{loading}}" class="loading-state">
+      <t-icon name="loading" size="32px" class="spin" />
+      <text>加载中...</text>
+    </view>
+
+    <!-- Form Content -->
+    <view wx:else class="form-content">
+      <!-- 基本信息 -->
+      <view class="section-card">
+        <view class="section-title">基本信息</view>
+        
+        <view class="form-item">
+          <view class="form-label">昵称</view>
+          <view class="input-wrapper">
+            <input 
+              class="form-input" 
+              placeholder="请输入昵称" 
+              value="{{displayName}}" 
+              bindinput="onNameInput"
+            />
+          </view>
+        </view>
+
+        <view class="form-item">
+          <view class="form-label">性别</view>
+          <view class="gender-options">
+            <view 
+              wx:for="{{genderOptions}}" 
+              wx:key="value"
+              class="gender-option {{gender === item.value ? 'active' : ''}}" 
+              bindtap="selectGender" 
+              data-gender="{{item.value}}"
+            >
+              <text class="gender-icon"><t-icon name="{{item.icon}}" size="20px" /></text>
+              <text class="gender-label">{{item.label}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 目标设置 -->
+      <view class="section-card">
+        <view class="section-title">目标设置</view>
+        
+        <view class="form-item">
+          <view class="form-label">目标院校</view>
+          <view class="input-wrapper">
+            <input 
+              class="form-input" 
+              placeholder="请输入学校名称" 
+              value="{{targetSchool}}" 
+              bindinput="onSchoolInput"
+            />
+          </view>
+        </view>
+        
+        <!-- 热门选择 -->
+        <view class="chip-group">
+          <view 
+            wx:for="{{hotSchools}}" 
+            wx:key="*this"
+            class="chip {{targetSchool === item ? 'active' : ''}}" 
+            bindtap="selectSchool" 
+            data-school="{{item}}"
+          >{{item}}</view>
+        </view>
+
+        <view class="form-item">
+          <view class="form-label">目标专业</view>
+          <view class="input-wrapper">
+            <input 
+              class="form-input" 
+              placeholder="请输入专业名称" 
+              value="{{targetMajor}}" 
+              bindinput="onMajorInput"
+            />
+          </view>
+        </view>
+
+        <view class="form-item">
+          <view class="form-label">目标分数</view>
+          <view class="input-wrapper">
+            <input 
+              class="form-input" 
+              type="number"
+              placeholder="请输入目标分数 (如 380)" 
+              value="{{targetScore}}" 
+              bindinput="onScoreInput"
+            />
+          </view>
+        </view>
+      </view>
+
+      <!-- 助手风格 -->
+      <view class="section-card">
+        <view class="section-title">阿陪风格</view>
+        <view class="section-desc">选择你喜欢的陪伴方式</view>
+        
+        <view class="persona-list">
+          <view 
+            wx:for="{{personas}}" 
+            wx:key="value"
+            class="persona-card {{persona === item.value ? 'selected' : ''}}" 
+            bindtap="selectPersona" 
+            data-persona="{{item.value}}"
+          >
+            <view class="persona-avatar {{persona === item.value ? 'active' : ''}}"><t-icon name="{{item.emoji}}" size="22px" /></view>
+            <view class="persona-info">
+              <view class="persona-name">{{item.name}}</view>
+              <view class="persona-desc">{{item.desc}}</view>
+            </view>
+            <view class="check-circle {{persona === item.value ? 'checked' : ''}}">
+              <t-icon wx:if="{{persona === item.value}}" name="check" size="16px" color="#fff" />
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- Bottom Save Button -->
+    <view class="bottom-action" wx:if="{{!loading}}">
+      <button class="btn-save {{saving ? 'disabled' : ''}}" bindtap="handleSave" disabled="{{saving}}">
+        {{saving ? '保存中...' : '保存修改'}}
+      </button>
+    </view>
+  </view>
+</view>

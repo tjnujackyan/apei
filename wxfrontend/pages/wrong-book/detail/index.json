@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "错题详情",
+  "usingComponents": {
+    "t-icon": "tdesign-miniprogram/icon/icon",
+    "t-tag": "tdesign-miniprogram/tag/tag",
+    "t-loading": "tdesign-miniprogram/loading/loading"
+  }
+}

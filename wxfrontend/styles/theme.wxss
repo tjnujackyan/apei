@@ -1,0 +1,470 @@
+/**
+ * 阿陪 - 全局主题配置
+ * 基于 ChatGPT/Apple 设计风格
+ * ===============================================
+ * 
+ * 【设计理念】
+ * 简洁、干净、有呼吸感的白色系设计
+ * 参考 Apple Design、ChatGPT、Grok 风格
+ * 
+ * 【主色调 - 仅3种】
+ * - 主背景色: #FFFFFF (纯白)
+ * - 次要背景: #F5F5F7 (Apple灰白)
+ * - 卡片背景: #FAFAFA (极浅灰)
+ * 
+ * 【强调色 - 仅1种主色】
+ * - 主强调色: #10A37F (ChatGPT绿) ✨
+ * - 成功色: #10A37F (同上)
+ * - 警告色: #F59E0B (橙色，仅用于警告)
+ * - 错误色: #EF4444 (红色，仅用于错误)
+ * 
+ * 【文字色 - 3层级】
+ * - 主文字: #1D1D1F (近黑)
+ * - 次要文字: #86868B (中灰)
+ * - 弱文字: #AEAEB2 (浅灰)
+ * 
+ * 【边框/分割】
+ * - 边框色: #E5E5E5 (浅灰边框)
+ * - 分割线: #F0F0F0 (极浅分割)
+ * ===============================================
+ */
+
+/* ==================== 颜色变量 ==================== */
+
+page {
+  /* 背景色 */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F5F5F7;
+  --bg-card: #FAFAFA;
+  --bg-page: #F2F2F7;
+  
+  /* 主色 - ChatGPT绿 */
+  --accent-primary: #10A37F;
+  --accent-hover: #0D8A6A;
+  --accent-light: rgba(16, 163, 127, 0.1);
+  --accent-lighter: rgba(16, 163, 127, 0.06);
+  --accent-border: rgba(16, 163, 127, 0.3);
+  
+  /* 文字颜色 */
+  --text-primary: #1D1D1F;
+  --text-secondary: #86868B;
+  --text-muted: #AEAEB2;
+  --text-white: #FFFFFF;
+  
+  /* 边框颜色 */
+  --border-color: #E5E5E5;
+  --border-light: #F0F0F0;
+  --border-lighter: #D1D1D6;
+  
+  /* 功能色 */
+  --success: #10A37F;
+  --warning: #F59E0B;
+  --error: #EF4444;
+  --info: #3B82F6;
+  
+  /* 阴影 */
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 12px 30px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 25px 50px rgba(0, 0, 0, 0.15);
+  
+  /* 圆角 */
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+  --radius-full: 999px;
+  
+  /* 字号 */
+  --text-xs: 11px;
+  --text-sm: 12px;
+  --text-base: 13px;
+  --text-md: 14px;
+  --text-lg: 15px;
+  --text-xl: 16px;
+  --text-2xl: 17px;
+  --text-3xl: 18px;
+  --text-4xl: 20px;
+  --text-5xl: 24px;
+  --text-6xl: 28px;
+  --text-7xl: 36px;
+}
+
+/* ==================== 基础样式 ==================== */
+
+page {
+  background: var(--bg-page);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  font-size: var(--text-lg);
+  line-height: 1.6;
+}
+
+/* ==================== 卡片组件 ==================== */
+
+.glass-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  transition: all 0.2s ease;
+}
+
+.glass-card-hover {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  transition: all 0.2s ease;
+}
+
+.glass-card-hover:active {
+  transform: scale(0.98);
+  border-color: var(--border-lighter);
+  box-shadow: var(--shadow-sm);
+}
+
+.card-secondary {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+}
+
+/* ==================== 按钮组件 ==================== */
+
+.btn-primary {
+  background: var(--accent-primary);
+  color: var(--text-white);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 16px 32px;
+  font-size: var(--text-xl);
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:active {
+  background: var(--accent-hover);
+  transform: scale(0.98);
+}
+
+.btn-secondary {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 14px 28px;
+  font-size: var(--text-lg);
+  font-weight: 500;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:active {
+  background: var(--bg-secondary);
+  transform: scale(0.98);
+}
+
+.btn-text {
+  background: transparent;
+  color: var(--accent-primary);
+  border: none;
+  padding: 8px 16px;
+  font-size: var(--text-lg);
+  font-weight: 500;
+}
+
+.btn-text:active {
+  opacity: 0.7;
+}
+
+/* ==================== 输入组件 ==================== */
+
+.input-field {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 16px 20px;
+  color: var(--text-primary);
+  font-size: var(--text-lg);
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.input-field:focus {
+  border-color: var(--accent-primary);
+  background: var(--bg-primary);
+  box-shadow: 0 0 0 3px var(--accent-light);
+}
+
+.input-field::placeholder {
+  color: var(--text-muted);
+}
+
+/* ==================== 标签组件 ==================== */
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-xs);
+  color: var(--text-secondary);
+  font-size: var(--text-base);
+  white-space: nowrap;
+}
+
+.tag-primary {
+  background: var(--accent-light);
+  color: var(--accent-primary);
+  border: 1px solid var(--accent-border);
+}
+
+.tag-success {
+  background: rgba(16, 163, 127, 0.1);
+  color: var(--success);
+}
+
+.tag-warning {
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--warning);
+}
+
+.tag-error {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--error);
+}
+
+/* ==================== 进度条 ==================== */
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: var(--border-color);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: var(--accent-primary);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+/* ==================== 分割线 ==================== */
+
+.divider {
+  height: 1px;
+  background: var(--border-light);
+  margin: 20px 0;
+}
+
+.divider-thick {
+  height: 8px;
+  background: var(--bg-secondary);
+  margin: 24px 0;
+}
+
+/* ==================== 文字样式 ==================== */
+
+.text-primary {
+  color: var(--text-primary);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.text-accent {
+  color: var(--accent-primary);
+}
+
+.text-success {
+  color: var(--success);
+}
+
+.text-warning {
+  color: var(--warning);
+}
+
+.text-error {
+  color: var(--error);
+}
+
+/* 字重 */
+.font-normal {
+  font-weight: 400;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+/* ==================== 动画效果 ==================== */
+
+/* 呼吸动画 - 用于重要提示 */
+@keyframes breathe {
+  0%, 100% {
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.breathing {
+  animation: breathe 3s ease-in-out infinite;
+}
+
+/* 渐入动画 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* 脉冲动画 - 用于新消息、通知 */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
+
+.pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* ==================== 布局工具类 ==================== */
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.gap-8 {
+  gap: 8px;
+}
+
+.gap-12 {
+  gap: 12px;
+}
+
+.gap-16 {
+  gap: 16px;
+}
+
+.gap-20 {
+  gap: 20px;
+}
+
+.gap-24 {
+  gap: 24px;
+}
+
+/* ==================== 间距工具类 ==================== */
+
+.p-0 { padding: 0; }
+.p-8 { padding: 8px; }
+.p-12 { padding: 12px; }
+.p-16 { padding: 16px; }
+.p-20 { padding: 20px; }
+.p-24 { padding: 24px; }
+
+.px-16 { padding-left: 16px; padding-right: 16px; }
+.px-20 { padding-left: 20px; padding-right: 20px; }
+.py-12 { padding-top: 12px; padding-bottom: 12px; }
+.py-16 { padding-top: 16px; padding-bottom: 16px; }
+
+.m-0 { margin: 0; }
+.m-8 { margin: 8px; }
+.m-12 { margin: 12px; }
+.m-16 { margin: 16px; }
+.m-20 { margin: 20px; }
+
+.mb-8 { margin-bottom: 8px; }
+.mb-12 { margin-bottom: 12px; }
+.mb-16 { margin-bottom: 16px; }
+.mb-20 { margin-bottom: 20px; }
+.mb-24 { margin-bottom: 24px; }
+
+/* ==================== 圆角工具类 ==================== */
+
+.rounded-sm { border-radius: var(--radius-sm); }
+.rounded-md { border-radius: var(--radius-md); }
+.rounded-lg { border-radius: var(--radius-lg); }
+.rounded-xl { border-radius: var(--radius-xl); }
+.rounded-full { border-radius: var(--radius-full); }
+
+/* ==================== 阴影工具类 ==================== */
+
+.shadow-sm { box-shadow: var(--shadow-sm); }
+.shadow-md { box-shadow: var(--shadow-md); }
+.shadow-lg { box-shadow: var(--shadow-lg); }
+
+/* ==================== 空状态 ==================== */
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.empty-icon {
+  font-size: 48px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.empty-text {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.empty-hint {
+  font-size: var(--text-md);
+  color: var(--text-muted);
+}
+

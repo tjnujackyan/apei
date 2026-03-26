@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "聊天DIY",
+  "usingComponents": {
+    "t-icon": "tdesign-miniprogram/icon/icon"
+  }
+}

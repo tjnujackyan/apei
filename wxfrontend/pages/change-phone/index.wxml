@@ -1,0 +1,80 @@
+<view class="page-container" style="padding-top: {{paddingTop}}px;">
+  <!-- Background Decorations -->
+  <view class="bg-circle circle-1"></view>
+  <view class="bg-circle circle-2"></view>
+
+  <view class="content-wrapper">
+    <!-- Header -->
+    <view class="page-header">
+      <view class="back-btn" bindtap="handleBack">
+        <t-icon name="chevron-left" size="24px" />
+      </view>
+      <view class="page-title">修改手机号</view>
+      <view class="header-placeholder"></view>
+    </view>
+
+    <!-- Current Phone Display -->
+    <view class="current-phone-card">
+      <view class="card-label">当前绑定手机</view>
+      <view class="card-value">{{currentPhone}}</view>
+    </view>
+
+    <!-- Form Card -->
+    <view class="form-card">
+      <view class="form-title">绑定新手机号</view>
+      <view class="form-desc">验证码将发送至新手机号</view>
+      
+      <!-- New Phone Input -->
+      <view class="input-group">
+        <view class="input-wrapper">
+          <text class="input-prefix">+86</text>
+          <input 
+            class="input-field"
+            type="number"
+            maxlength="11"
+            placeholder="请输入新手机号"
+            value="{{newPhone}}"
+            bindinput="onPhoneInput"
+          />
+        </view>
+      </view>
+
+      <!-- SMS Code Input -->
+      <view class="input-group">
+        <view class="input-wrapper code-input">
+          <input 
+            class="input-field"
+            type="number"
+            maxlength="6"
+            placeholder="请输入验证码"
+            value="{{smsCode}}"
+            bindinput="onCodeInput"
+          />
+          <view 
+            class="send-btn {{canSendCode ? '' : 'disabled'}}"
+            bindtap="sendCode"
+          >
+            {{countdown > 0 ? countdown + 's' : '获取验证码'}}
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- Submit Button -->
+    <view class="submit-section">
+      <button 
+        class="submit-btn {{canSubmit ? '' : 'disabled'}}" 
+        bindtap="submit"
+        disabled="{{!canSubmit}}"
+      >
+        确认修改
+      </button>
+    </view>
+
+    <!-- Tips -->
+    <view class="tips">
+      <view class="tip-item">· 修改后，原手机号将解绑</view>
+      <view class="tip-item">· 新手机号需未被其他账号绑定</view>
+    </view>
+  </view>
+</view>

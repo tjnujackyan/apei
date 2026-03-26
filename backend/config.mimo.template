@@ -1,0 +1,30 @@
+# ============================================
+# 阿陪项目 - 小米MiMo配置模板
+# ============================================
+# 使用说明:
+# 1. 复制此文件内容到 .env 文件
+# 2. 替换所有 your-xxx 为实际的配置值
+# 3. 重启服务: npm run start:dev
+
+# ============================================
+# LLM配置 - 小米MiMo ⭐
+# ============================================
+LLM_PROVIDER=mimo
+LLM_BASE_URL=https://api.xiaomimomo.com/v1
+LLM_MODEL=mimo-pro
+LLM_API_KEY=sk-your-mimo-api-key-here
+LLM_TIMEOUT_MS=120000
+
+# ============================================
+# 其他必需配置
+# ============================================
+JWT_SECRET=your-jwt-secret
+PORT=3000
+DB_TYPE=sqlite
+SQLITE_PATH=./dev.db
+
+# TTS/ASR配置 (保持原有配置)
+TTS_ACCESS_TOKEN=your-tts-token
+TTS_APP_ID=your-tts-app-id
+ASR_APP_ID=your-asr-app-id
+ASR_ACCESS_KEY=your-asr-key

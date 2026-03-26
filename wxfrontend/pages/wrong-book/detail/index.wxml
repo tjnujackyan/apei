@@ -1,0 +1,89 @@
+<view class="page-container" style="padding-top: {{paddingTop}}px;">
+  <!-- Background Decorations -->
+  <view class="bg-circle circle-1"></view>
+  <view class="bg-circle circle-2"></view>
+
+  <block wx:if="{{loading}}">
+    <view class="loading-container">
+      <t-loading theme="circular" size="40rpx" text="加载中..." />
+    </view>
+  </block>
+  
+  <block wx:elif="{{questions.length === 0}}">
+    <view class="empty-state">
+      <t-icon name="check-circle" size="64px" color="#34C759" />
+      <text>恭喜！暂无错题</text>
+    </view>
+  </block>
+
+  <block wx:else>
+    <view class="header">
+      <text class="title">{{titleName}}</text>
+      <text class="subtitle">共 {{questions.length}} 道错题</text>
+    </view>
+
+    <block wx:for="{{questions}}" wx:key="id">
+      <view class="question-card">
+        <view class="card-header">
+          <view class="type-tag">{{item.question.type === 'single' ? '单选题' : (item.question.type === 'multiple' ? '多选题' : '判断题')}}</view>
+          <view class="error-count">错误 {{item.wrongCount}} 次</view>
+        </view>
+        
+        <view class="question-stem">
+          <text user-select>{{item.question.stem}}</text>
+        </view>
+
+        <view class="options-list">
+          <block wx:for="{{item.question.options}}" wx:key="label" wx:for-item="opt">
+            <view class="option-item {{opt.isCorrect ? 'correct' : ''}}">
+              <text class="option-label">{{opt.label}}.</text>
+              <text class="option-content" user-select>{{opt.content}}</text>
+              <t-icon wx:if="{{opt.isCorrect}}" name="check" color="#34C759" size="18px" />
+            </view>
+          </block>
+        </view>
+
+        <!-- Analysis Section -->
+        <view class="analysis-section">
+          <view class="analysis-row">
+            <text class="label">你的答案</text>
+            <view class="value wrong">
+              <block wx:if="{{item.lastAnswer && item.lastAnswer.selected}}">
+                <block wx:if="{{item.lastAnswer.selected.length}}">
+                  <text wx:for="{{item.lastAnswer.selected}}" wx:key="label" wx:for-item="sel">{{sel.label}} </text>
+                </block>
+                <block wx:else>
+                  <text>{{item.lastAnswer.selected.label}}</text>
+                </block>
+              </block>
+              <text wx:else>未记录</text>
+            </view>
+          </view>
+          <view class="analysis-row">
+            <text class="label">正确答案</text>
+            <view class="value correct">
+               <block wx:if="{{item.question.type === 'true_false'}}">
+                  <block wx:for="{{item.question.options}}" wx:key="label" wx:for-item="opt">
+                     <text wx:if="{{opt.isCorrect}}">{{opt.content}}</text>
+                  </block>
+               </block>
+               <block wx:else>
+                  <block wx:for="{{item.question.options}}" wx:key="label" wx:for-item="opt">
+                    <text wx:if="{{opt.isCorrect}}">{{opt.label}} </text>
+                  </block>
+               </block>
+            </view>
+          </view>
+          <view class="analysis-row" wx:if="{{item.question.answerExplanation}}">
+            <text class="label">解析</text>
+            <text class="value" user-select>{{item.question.answerExplanation}}</text>
+          </view>
+        </view>
+
+        <view class="footer">
+          <text class="date">上次错误: {{item.updatedAtFormatted}}</text>
+        </view>
+      </view>
+    </block>
+  </block>
+</view>

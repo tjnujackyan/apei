@@ -1,0 +1,94 @@
+# ============================================
+# DeepSeek V3 Configuration Template
+# ============================================
+# 
+# DeepSeek V3 是中国自研的顶尖大模型
+# - 671B MoE 架构
+# - 128K 上下文窗口
+# - 中英文双语优化
+# - 性价比极高
+#
+# 使用说明：
+# 1. 访问 https://platform.deepseek.com 注册账号
+# 2. 获取 API Key
+# 3. 复制此文件为 .env
+# 4. 填写你的 API Key
+# 5. 重启服务
+# ============================================
+
+# ============================================
+# LLM Provider 配置
+# ============================================
+LLM_PROVIDER=deepseek
+LLM_BASE_URL=https://api.deepseek.com
+LLM_API_KEY=your-deepseek-api-key-here
+
+# ============================================
+# 模型选择
+# ============================================
+# DeepSeek 模型选项：
+# - deepseek-chat  : 通用对话模型（推荐）⭐
+# - deepseek-coder : 代码专用模型
+LLM_MODEL=deepseek-chat
+
+# ============================================
+# 超时设置
+# ============================================
+# DeepSeek 响应速度快，推荐 2 分钟超时
+LLM_TIMEOUT_MS=120000
+
+# ============================================
+# 数据库配置 (保持不变)
+# ============================================
+DATABASE_TYPE=sqlite
+DATABASE_PATH=./data/dev.db
+
+# ============================================
+# JWT 配置 (保持不变)
+# ============================================
+JWT_SECRET=your-secret-key-change-in-production
+JWT_EXPIRES_IN=7d
+
+# ============================================
+# 服务端口 (保持不变)
+# ============================================
+PORT=3000
+
+# ============================================
+# TTS/ASR 配置 (可选，保持不变)
+# ============================================
+TTS_BASE_URL=wss://openspeech.bytedance.com/api/v1/tts/ws_binary
+TTS_ACCESS_TOKEN=your-doubao-tts-token
+TTS_APP_ID=your-app-id
+TTS_RESOURCE_ID=volc.service_type.10029
+TTS_VOICE=zh_female_shuangkuaisisi_moon_bigtts
+TTS_SPEED_RATIO=0.85
+TTS_VOLUME_RATIO=1.1
+TTS_PITCH_RATIO=1.0
+TTS_EMOTION=gentle
+
+ASR_APP_ID=your-app-id
+ASR_ACCESS_KEY=your-access-key
+ASR_RESOURCE_ID=volc.bigasr.auc
+
+# ============================================
+# DeepSeek 使用建议
+# ============================================
+#
+# 1. 考研刷题场景（推荐）:
+#    LLM_MODEL=deepseek-chat
+#    - 强大的理解和分析能力
+#    - 中文优化，适合考研题目
+#    - 成本低，适合高频使用
+#
+# 2. 代码辅助场景:
+#    LLM_MODEL=deepseek-coder
+#    - 专门优化代码理解和生成
+#    - 支持多种编程语言
+#
+# 3. 性价比对比:
+#    DeepSeek: ¥0.001/1K tokens (输入)
+#    GPT-4:    ¥0.21/1K tokens (输入)
+#    省钱 200 倍！💰
+#
+# ============================================
